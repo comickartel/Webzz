@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CyberAI — Cybersecurity Assistant</title>
+
+<style>
+/* =========================================================
+   CYBERAI — CSS
+========================================================= */
+
+:root {
+    --cyan: #00f5ff;
+    --green: #39ff88;
+    --blue: #168cff;
+    --purple: #8b5cff;
+    --red: #ff3d71;
+    --dark: #03070b;
+    --panel: rgba(4, 14, 20, .86);
+    --border: rgba(0, 245, 255, .2);
+    --text: #eaffff;
+    --muted: #638087;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background: #020508;
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(0, 245, 255, .09),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(0, 255, 120, .06),
+            transparent 25%
+        ),
+        linear-gradient(
+            #041017,
+            #010305
+        );
+}
+
+/* Scanlines */
+
+.scanlines {
+    position: absolute;
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 3px,
+            rgba(0, 255, 255, .018) 4px
+        );
+
+    pointer-events: none;
+}
+
+/* Grid */
+
+.grid {
+    position: absolute;
+    inset: -100%;
+
+    opacity: .14;
+
+    background-image:
+        linear-gradient(
+            rgba(0, 245, 255, .12) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 245, 255, .12) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    transform:
+        perspective(550px)
+        rotateX(58deg);
+
+    transform-origin: center bottom;
+
+    animation:
+        gridMove 8s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        transform:
+            perspective(550px)
+            rotateX(58deg)
+            translateY(0);
+    }
+
+    to {
+        transform:
+            perspective(550px)
+            rotateX(58deg)
+            translateY(45px);
+    }
+}
+
+/* Glows */
+
+.glow {
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+
+    filter: blur(120px);
+
+    opacity: .35;
+
+    animation:
+        glowMove 9s ease-in-out infinite alternate;
+}
+
+.glow.one {
+    left: -180px;
+    top: -180px;
+    background: #00d9ff;
+}
+
+.glow.two {
+    right: -200px;
+    bottom: -200px;
+    background: #0077ff;
+    animation-delay: 2s;
+}
+
+@keyframes glowMove {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(100px, 80px) scale(1.25);
+    }
+}
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particles {
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    background: var(--cyan);
+
+    box-shadow:
+        0 0 10px var(--cyan);
+
+    animation:
+        particleUp linear infinite;
+}
+
+@keyframes particleUp {
+    from {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .8;
+    }
+
+    80% {
+        opacity: .4;
+    }
+
+    to {
+        transform: translateY(-10vh);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    width: min(1100px, 94%);
+    min-height: 92vh;
+
+    margin: 4vh auto;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:
+        24px;
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        0 0 70px rgba(0, 220, 255, .08),
+        inset 0 0 50px rgba(0, 245, 255, .025);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 18px 24px;
+
+    background:
+        rgba(2, 11, 16, .85);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* =========================================================
+   CYBER SHIELD LOGO
+========================================================= */
+
+.logo {
+    width: 58px;
+    height: 64px;
+
+    position: relative;
+
+    clip-path:
+        polygon(
+            50% 0%,
+            94% 16%,
+            87% 70%,
+            50% 100%,
+            13% 70%,
+            6% 16%
+        );
+
+    background:
+        linear-gradient(
+            145deg,
+            #00f5ff,
+            #0874ff 45%,
+            #07151f 46%
+        );
+
+    box-shadow:
+        0 0 15px var(--cyan);
+
+    animation:
+        shieldPulse 2s infinite;
+}
+
+.logo::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 7px;
+
+    clip-path:
+        polygon(
+            50% 0%,
+            94% 16%,
+            87% 70%,
+            50% 100%,
+            13% 70%,
+            6% 16%
+        );
+
+    background:
+        #061017;
+}
+
+/* Digital lock */
+
+.logo::after {
+    content: "01";
+
+    position: absolute;
+
+    left: 11px;
+    top: 21px;
+
+    color: var(--cyan);
+
+    font-size: 13px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px var(--cyan);
+
+    animation:
+        textFlicker 1.5s infinite;
+}
+
+@keyframes shieldPulse {
+
+    0%, 35%, 100% {
+        transform: scale(1);
+
+        filter:
+            drop-shadow(0 0 5px #00bfff)
+            drop-shadow(0 0 12px rgba(0,245,255,.35));
+    }
+
+    42% {
+        transform: scale(1.09);
+
+        filter:
+            brightness(1.8)
+            drop-shadow(0 0 8px #00f5ff)
+            drop-shadow(0 0 28px #00aaff)
+            drop-shadow(0 0 50px rgba(0,245,255,.6));
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+@keyframes textFlicker {
+    0%, 90%, 100% {
+        opacity: 1;
+    }
+
+    93% {
+        opacity: .25;
+    }
+
+    96% {
+        opacity: 1;
+    }
+}
+
+/* Brand */
+
+.brand h1 {
+    font-size: 24px;
+    letter-spacing: 3px;
+}
+
+.brand h1 span {
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 8px var(--cyan),
+        0 0 20px rgba(0,245,255,.5);
+}
+
+.brand small {
+    color: var(--muted);
+}
+
+/* Status */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--green);
+
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 12px var(--green);
+
+    animation:
+        statusPulse 1s infinite;
+}
+
+@keyframes statusPulse {
+    50% {
+        opacity: .25;
+        transform: scale(.7);
+    }
+}
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat {
+    flex: 1;
+
+    min-height: 500px;
+
+    overflow-y: auto;
+
+    padding: 28px;
+
+    scroll-behavior: smooth;
+}
+
+.chat::-webkit-scrollbar {
+    width: 7px;
+}
+
+.chat::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chat::-webkit-scrollbar-thumb {
+    background: #16434b;
+    border-radius: 20px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    animation:
+        messageIn .3s ease;
+}
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background:
+        #071c23;
+
+    border:
+        1px solid rgba(0,245,255,.45);
+
+    box-shadow:
+        0 0 14px rgba(0,245,255,.12);
+}
+
+.user .avatar {
+    order: 2;
+
+    background: #0d1924;
+
+    border-color:
+        rgba(80,150,255,.45);
+}
+
+.bubble {
+    max-width: min(720px, 80%);
+
+    padding: 14px 17px;
+
+    line-height: 1.55;
+
+    font-size: 15px;
+
+    background:
+        rgba(6, 25, 31, .85);
+
+    border:
+        1px solid rgba(0,245,255,.13);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.18);
+}
+
+.user .bubble {
+    background:
+        rgba(10, 27, 43, .9);
+
+    border-color:
+        rgba(60,150,255,.2);
+}
+
+.bubble strong {
+    color: var(--cyan);
+
+    text-shadow:
+        0 0 8px rgba(0,245,255,.3);
+}
+
+.bubble code {
+    color: #65ffc2;
+
+    background:
+        rgba(0,0,0,.4);
+
+    border:
+        1px solid rgba(57,255,136,.12);
+
+    padding: 2px 6px;
+
+    border-radius: 5px;
+}
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    padding:
+        0 28px 15px;
+}
+
+.suggestion {
+    padding:
+        9px 13px;
+
+    color:
+        #aeeff3;
+
+    background:
+        rgba(6, 29, 35, .7);
+
+    border:
+        1px solid rgba(0,245,255,.16);
+
+    border-radius:
+        999px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        12px;
+
+    transition:
+        .2s;
+}
+
+.suggestion:hover {
+    color: white;
+
+    background:
+        rgba(0,100,120,.5);
+
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 16px rgba(0,245,255,.18);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-area {
+    padding:
+        18px 24px 22px;
+
+    border-top:
+        1px solid rgba(0,245,255,.12);
+
+    background:
+        rgba(2, 9, 13, .8);
+}
+
+.input-box {
+    display: flex;
+
+    gap: 10px;
+
+    padding: 8px;
+
+    background:
+        rgba(4, 20, 25, .95);
+
+    border:
+        1px solid rgba(0,245,255,.2);
+
+    border-radius:
+        16px;
+
+    transition:
+        .2s;
+}
+
+.input-box:focus-within {
+    border-color:
+        var(--cyan);
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.08);
+}
+
+#userInput {
+    flex: 1;
+
+    padding: 12px;
+
+    color: white;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    font-size: 15px;
+}
+
+#userInput::placeholder {
+    color: #4e6970;
+}
+
+#sendBtn {
+    width: 50px;
+    height: 45px;
+
+    border: none;
+    border-radius: 11px;
+
+    color: #001012;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f5ff,
+            #2cff9b
+        );
+
+    cursor: pointer;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.25);
+
+    transition:
+        .2s;
+}
+
+#sendBtn:hover {
+    transform:
+        scale(1.06);
+
+    box-shadow:
+        0 0 28px rgba(0,245,255,.5);
+}
+
+#sendBtn:active {
+    transform:
+        scale(.94);
+}
+
+.footer {
+    margin-top: 9px;
+
+    text-align: center;
+
+    color: #405960;
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+.typing {
+    display: flex;
+    gap: 5px;
+
+    padding: 5px 2px;
+}
+
+.typing span {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--cyan);
+
+    box-shadow:
+        0 0 8px var(--cyan);
+
+    animation:
+        typing 1s infinite;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: .3s;
+}
+
+@keyframes typing {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: .3;
+    }
+
+    30% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width: 650px) {
+
+    .app {
+        width: 100%;
+        min-height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .header {
+        padding: 14px;
+    }
+
+    .brand h1 {
+        font-size: 19px;
+    }
+
+    .logo {
+        width: 48px;
+        height: 54px;
+    }
+
+    .chat {
+        padding: 18px 14px;
+    }
+
+    .suggestions {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .input-area {
+        padding: 14px;
+    }
+
+    .bubble {
+        max-width: 86%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background">
+
+    <div class="grid"></div>
+
+    <div class="glow one"></div>
+
+    <div class="glow two"></div>
+
+    <div class="scanlines"></div>
+
+</div>
+
+<div
+    class="particles"
+    id="particles">
+</div>
+
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="logo"></div>
+
+            <div>
+
+                <h1>
+                    <span>CYBER</span>AI
+                </h1>
+
+                <small>
+                    Cybersecurity Learning Assistant
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            ONLINE
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CHAT
+    ====================================================== -->
+
+    <main
+        class="chat"
+        id="chat">
+
+        <div class="message bot">
+
+            <div class="avatar">
+                🛡️
+            </div>
+
+            <div class="bubble">
+
+                <strong>CYBERAI</strong>
+
+                <br><br>
+
+                Welcome to CyberAI. 🛡️
+
+                <br><br>
+
+                I can help you learn cybersecurity,
+                ethical hacking and defensive security.
+
+                <br><br>
+
+                Try asking about:
+
+                <br><br>
+
+                🔐 Password security<br>
+                🌐 Network security<br>
+                🕸️ Web security<br>
+                🐛 Malware analysis<br>
+                🔎 Vulnerabilities<br>
+                🧪 CTFs and security labs<br>
+                🐧 Linux security<br>
+                🚨 Incident response<br>
+                🔒 Cryptography
+
+                <br><br>
+
+                <span style="color:#39ff88;">
+                    Use your skills responsibly and
+                    only test systems you are authorized
+                    to assess.
+                </span>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         SUGGESTIONS
+    ====================================================== -->
+
+    <div class="suggestions">
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('What is ethical hacking?')">
+
+            🛡️ Ethical hacking
+
+        </button>
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('Explain SQL injection')">
+
+            🕸️ SQL injection
+
+        </button>
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('How can I secure my passwords?')">
+
+            🔐 Password security
+
+        </button>
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('What is a CTF?')">
+
+            🧪 CTFs
+
+        </button>
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('Explain network security')">
+
+            🌐 Network security
+
+        </button>
+
+        <button
+            class="suggestion"
+            onclick="askSuggestion('What is XSS?')">
+
+            🕸️ XSS
+
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         INPUT
+    ====================================================== -->
+
+    <div class="input-area">
+
+        <div class="input-box">
+
+            <input
+                id="userInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Ask CyberAI a cybersecurity question..."
+            >
+
+            <button id="sendBtn">
+                ➤
+            </button>
+
+        </div>
+
+        <div class="footer">
+            CYBERAI • Cybersecurity Education • Defensive Security
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CYBERAI — JAVASCRIPT
+========================================================= */
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+const particles =
+    document.getElementById("particles");
+
+for (let i = 0; i < 70; i++) {
+
+    const particle =
+        document.createElement("div");
+
+    particle.className =
+        "particle";
+
+    particle.style.left =
+        Math.random() * 100 + "%";
+
+    particle.style.animationDuration =
+        (5 + Math.random() * 12) + "s";
+
+    particle.style.animationDelay =
+        (-Math.random() * 12) + "s";
+
+    const size =
+        2 + Math.random() * 3;
+
+    particle.style.width =
+        size + "px";
+
+    particle.style.height =
+        size + "px";
+
+    particles.appendChild(
+        particle
+    );
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const chat =
+    document.getElementById("chat");
+
+const input =
+    document.getElementById("userInput");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+
+/* =========================================================
+   ESCAPE USER INPUT
+========================================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    text,
+    type = "bot"
+) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + type;
+
+    const avatar =
+        type === "bot"
+            ? "🛡️"
+            : "👤";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${avatar}
+        </div>
+
+        <div class="bubble">
+            ${text}
+        </div>
+
+    `;
+
+    chat.appendChild(
+        message
+    );
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+========================================================= */
+
+function showTyping() {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message bot";
+
+    message.id =
+        "typingMessage";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            🛡️
+        </div>
+
+        <div class="bubble">
+
+            <div class="typing">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        </div>
+
+    `;
+
+    chat.appendChild(
+        message
+    );
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+    if (typing) {
+        typing.remove();
+    }
+}
+
+
+/* =========================================================
+   SAFE CYBERSECURITY KNOWLEDGE BASE
+========================================================= */
+
+const knowledge = [
+
+    {
+        keywords: [
+            "ethical hacking",
+            "ethical hacker"
+        ],
+
+        answer: `
+        🛡️ <strong>Ethical Hacking</strong>
+
+        <br><br>
+
+        Ethical hacking is authorized security
+        testing performed to identify and help
+        fix vulnerabilities.
+
+        <br><br>
+
+        A legitimate assessment normally has:
+
+        <br><br>
+
+        • Permission from the system owner<br>
+        • A defined scope<br>
+        • Testing rules<br>
+        • Documentation<br>
+        • Responsible reporting
+
+        <br><br>
+
+        Practice on systems you own or on
+        intentionally vulnerable labs and CTFs.
+        `
+    },
+
+
+    {
+        keywords: [
+            "sql injection",
+            "sqli"
+        ],
+
+        answer: `
+        🕸️ <strong>SQL Injection</strong>
+
+        <br><br>
+
+        SQL injection occurs when untrusted input
+        is incorrectly incorporated into database
+        queries.
+
+        <br><br>
+
+        Potential consequences include unauthorized
+        access to application data or modification
+        of database information.
+
+        <br><br>
+
+        🛡️ <strong>Defenses:</strong>
+
+        <br>
+
+        • Parameterized queries<br>
+        • Prepared statements<br>
+        • Input validation<br>
+        • Least-privilege database accounts<br>
+        • Secure error handling
+
+        <br><br>
+
+        You can safely practice this concept in
+        intentionally vulnerable web-security labs.
+        `
+    },
+
+
+    {
+        keywords: [
+            "xss",
+            "cross site scripting"
+        ],
+
+        answer: `
+        🕸️ <strong>Cross-Site Scripting (XSS)</strong>
+
+        <br><br>
+
+        XSS is a web-security vulnerability where
+        attacker-controlled content can be interpreted
+        as script in another user's browser.
+
+        <br><br>
+
+        Common defenses include:
+
+        <br><br>
+
+        • Context-aware output encoding<br>
+        • Input validation<br>
+        • Content Security Policy<br>
+        • Safe templating systems<br>
+        • Avoiding unsafe HTML injection
+
+        `
+    },
+
+
+    {
+        keywords: [
+            "password",
+            "passwords"
+        ],
+
+        answer: `
+        🔐 <strong>Password Security</strong>
+
+        <br><br>
+
+        Good password security includes:
+
+        <br><br>
+
+        • Long unique passwords<br>
+        • A password manager<br>
+        • Multi-factor authentication<br>
+        • Protection against credential reuse<br>
+        • Secure password hashing on servers
+
+        <br><br>
+
+        Modern systems should use dedicated
+        password-hashing algorithms rather than
+        storing plaintext passwords.
+        `
+    },
+
+
+    {
+        keywords: [
+            "network security",
+            "network"
+        ],
+
+        answer: `
+        🌐 <strong>Network Security</strong>
+
+        <br><br>
+
+        Network security protects systems and
+        communications from unauthorized access
+        and abuse.
+
+        <br><br>
+
+        Important concepts include:
+
+        <br><br>
+
+        • Firewalls<br>
+        • Network segmentation<br>
+        • Secure protocols<br>
+        • Access control<br>
+        • Monitoring and logging<br>
+        • Patch management
+        `
+    },
+
+
+    {
+        keywords: [
+            "ctf",
+            "capture the flag"
+        ],
+
+        answer: `
+        🧪 <strong>Capture The Flag</strong>
+
+        <br><br>
+
+        CTFs are security competitions where
+        participants solve intentionally designed
+        challenges.
+
+        <br><br>
+
+        Common categories include:
+
+        <br><br>
+
+        🔐 Cryptography<br>
+        🌐 Web security<br>
+        🔎 Forensics<br>
+        💻 Reverse engineering<br>
+        🧩 Miscellaneous puzzles
+
+        <br><br>
+
+        CTF platforms are a good way to practice
+        security skills in authorized environments.
+        `
+    },
+
+
+    {
+        keywords: [
+            "malware",
+            "malware analysis"
+        ],
+
+        answer: `
+        🐛 <strong>Malware Analysis</strong>
+
+        <br><br>
+
+        Malware analysis examines malicious software
+        to understand its behavior and indicators.
+
+        <br><br>
+
+        Two broad approaches are:
+
+        <br><br>
+
+        <strong>Static analysis</strong> — examining a
+        sample without executing it.
+
+        <br><br>
+
+        <strong>Dynamic analysis</strong> — observing
+        behavior inside an isolated analysis environment.
+
+        <br><br>
+
+        Malware should be handled in properly
+        isolated environments.
+        `
+    },
+
+
+    {
+        keywords: [
+            "phishing"
+        ],
+
+        answer: `
+        🎣 <strong>Phishing</strong>
+
+        <br><br>
+
+        Phishing attempts to trick people into
+        revealing information or performing an
+        unwanted action.
+
+        <br><br>
+
+        Defensive practices include:
+
+        <br><br>
+
+        • Checking unexpected links<br>
+        • Verifying senders through another channel<br>
+        • Using MFA<br>
+        • Training users<br>
+        • Using email security controls
+        `
+    },
+
+
+    {
+        keywords: [
+            "firewall"
+        ],
+
+        answer: `
+        🔥 <strong>Firewalls</strong>
+
+        <br><br>
+
+        A firewall controls network traffic according
+        to configured security rules.
+
+        <br><br>
+
+        Firewalls can help restrict unnecessary
+        connections and reduce the attack surface.
+
+        <br><br>
+
+        They work best as one part of a broader
+        defense strategy.
+        `
+    },
+
+
+    {
+        keywords: [
+            "cryptography",
+            "encryption",
+            "encrypt"
+        ],
+
+        answer: `
+        🔒 <strong>Cryptography</strong>
+
+        <br><br>
+
+        Cryptography provides mechanisms for protecting
+        information and communications.
+
+        <br><br>
+
+        Important concepts include:
+
+        <br><br>
+
+        • Encryption<br>
+        • Hashing<br>
+        • Digital signatures<br>
+        • Key management<br>
+        • Authentication
+
+        <br><br>
+
+        Encryption protects confidentiality, while
+        cryptographic hashes are commonly used for
+        integrity and other security purposes.
+        `
+    },
+
+
+    {
+        keywords: [
+            "linux",
+            "linux security"
+        ],
+
+        answer: `
+        🐧 <strong>Linux Security</strong>
+
+        <br><br>
+
+        Useful defensive practices include:
+
+        <br><br>
+
+        • Keeping packages updated<br>
+        • Using least privilege<br>
+        • Reviewing logs<br>
+        • Restricting unnecessary services<br>
+        • Using strong authentication<br>
+        • Applying appropriate file permissions
+        `
+    },
+
+
+    {
+        keywords: [
+            "vulnerability",
+            "vulnerabilities"
+        ],
+
+        answer: `
+        🔎 <strong>Vulnerabilities</strong>
+
+        <br><br>
+
+        A vulnerability is a weakness that could
+        potentially be abused to violate security
+        properties.
+
+        <br><br>
+
+        A responsible vulnerability-management
+        process usually includes:
+
+        <br><br>
+
+        1. Identify assets.<br>
+        2. Discover vulnerabilities.<br>
+        3. Assess risk.<br>
+        4. Remediate.<br>
+        5. Verify the fix.<br>
+        6. Continue monitoring.
+        `
+    },
+
+
+    {
+        keywords: [
+            "incident response",
+            "incident"
+        ],
+
+        answer: `
+        🚨 <strong>Incident Response</strong>
+
+        <br><br>
+
+        Incident response is the process of handling
+        cybersecurity incidents.
+
+        <br><br>
+
+        Common stages include:
+
+        <br><br>
+
+        • Preparation<br>
+        • Detection<br>
+        • Analysis<br>
+        • Containment<br>
+        • Eradication<br>
+        • Recovery<br>
+        • Lessons learned
+        `
+    }
+
+];
+
+
+/* =========================================================
+   DANGEROUS REQUEST DETECTION
+========================================================= */
+
+const unsafePatterns = [
+
+    /steal.*password/i,
+    /steal.*credential/i,
+    /steal.*account/i,
+    /hack.*facebook/i,
+    /hack.*instagram/i,
+    /hack.*gmail/i,
+    /hack.*account/i,
+    /break.*into/i,
+    /bypass.*authentication/i,
+    /bypass.*login/i,
+    /keylogger.*victim/i,
+    /ransomware.*deploy/i,
+    /malware.*deploy/i,
+    /ddos.*attack/i,
+    /destroy.*server/i,
+    /delete.*logs/i,
+    /evade.*antivirus/i,
+    /disable.*antivirus/i
+
+];
+
+
+function isUnsafeRequest(question) {
+
+    return unsafePatterns.some(
+        pattern =>
+            pattern.test(question)
+    );
+}
+
+
+/* =========================================================
+   FIND ANSWER
+========================================================= */
+
+function findAnswer(question) {
+
+    if (
+        isUnsafeRequest(question)
+    ) {
+
+        return `
+
+        🛡️ <strong>Let's keep it ethical.</strong>
+
+        <br><br>
+
+        I can explain the cybersecurity concept,
+        help you secure your own system, or show
+        you how to practice the technique in an
+        authorized CTF or isolated lab.
+
+        <br><br>
+
+        For example, you can ask:
+
+        <br><br>
+
+        • "How do I secure an account?"<br>
+        • "How does SQL injection work?"<br>
+        • "How can I detect malware?"<br>
+        • "How do I build a safe security lab?"<br>
+        • "How can I defend against phishing?"
+
+        `;
+    }
+
+
+    const q =
+        question.toLowerCase();
+
+    let bestMatch =
+        null;
+
+    let bestScore =
+        0;
+
+
+    for (
+        const item of knowledge
+    ) {
+
+        let score =
+            0;
+
+        for (
+            const keyword of item.keywords
+        ) {
+
+            if (
+                q.includes(keyword)
+            ) {
+
+                score++;
+            }
+        }
+
+        if (
+            score > bestScore
+        ) {
+
+            bestScore =
+                score;
+
+            bestMatch =
+                item;
+        }
+    }
+
+
+    if (bestMatch) {
+
+        return bestMatch.answer;
+    }
+
+
+    return `
+
+        🤖 <strong>CYBERAI</strong>
+
+        <br><br>
+
+        I don't have a specific answer for that
+        in my built-in knowledge base yet.
+
+        <br><br>
+
+        Try asking about:
+
+        <br><br>
+
+        🛡️ Ethical hacking<br>
+        🔐 Password security<br>
+        🕸️ Web security<br>
+        🌐 Network security<br>
+        🐛 Malware analysis<br>
+        🧪 CTFs<br>
+        🔒 Cryptography<br>
+        🐧 Linux security<br>
+        🚨 Incident response
+
+        <br><br>
+
+        <span style="color:#39ff88;">
+        Tip: keep experiments inside systems
+        you own or have permission to test.
+        </span>
+
+    `;
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage() {
+
+    const question =
+        input.value.trim();
+
+    if (!question) {
+        return;
+    }
+
+
+    addMessage(
+        escapeHTML(question),
+        "user"
+    );
+
+
+    input.value = "";
+
+
+    showTyping();
+
+
+    await new Promise(
+        resolve =>
+            setTimeout(
+                resolve,
+                600 +
+                Math.random() * 900
+            )
+    );
+
+
+    removeTyping();
+
+
+    const answer =
+        findAnswer(question);
+
+
+    addMessage(
+        answer,
+        "bot"
+    );
+}
+
+
+/* =========================================================
+   BUTTON
+========================================================= */
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+input.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            sendMessage();
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+function askSuggestion(question) {
+
+    input.value =
+        question;
+
+    sendMessage();
+}
+
+
+/* =========================================================
+   LOGO RANDOM FLASH
+========================================================= */
+
+setInterval(() => {
+
+    const logo =
+        document.querySelector(".logo");
+
+    logo.style.transform =
+        "scale(1.07)";
+
+    setTimeout(() => {
+
+        logo.style.transform =
+            "scale(1)";
+
+    }, 180);
+
+}, 3500);
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+window.addEventListener(
+    "load",
+    () => {
+
+        setTimeout(
+            () => input.focus(),
+            500
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
