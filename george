@@ -4,43 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>CyberAI — Cybersecurity Assistant</title>
+<title>CYBERAI // Command Console</title>
 
 <style>
 /* =========================================================
-   CYBERAI — CSS
+   CYBERAI // COMMAND CONSOLE v2
 ========================================================= */
 
 :root {
     --cyan: #00f5ff;
+    --cyan2: #00a8ff;
     --green: #39ff88;
     --blue: #168cff;
-    --purple: #8b5cff;
+    --purple: #9b5cff;
+    --yellow: #ffe66d;
+    --orange: #ff9d3d;
     --red: #ff3d71;
-    --dark: #03070b;
-    --panel: rgba(4, 14, 20, .86);
-    --border: rgba(0, 245, 255, .2);
+
+    --bg: #020609;
+    --panel: rgba(3, 14, 20, .91);
+    --panel2: rgba(5, 21, 29, .92);
+
+    --border: rgba(0,245,255,.19);
+    --border-bright: rgba(0,245,255,.48);
+
     --text: #eaffff;
-    --muted: #638087;
+    --muted: #66858d;
+    --muted2: #41636b;
 }
 
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-html,
-body {
-    min-height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
     overflow-x: hidden;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
     color: var(--text);
-    background: #020508;
+    background: var(--bg);
 }
 
 /* =========================================================
@@ -50,27 +67,31 @@ body {
 .background {
     position: fixed;
     inset: 0;
-    z-index: -10;
+    z-index: -20;
     overflow: hidden;
 
     background:
         radial-gradient(
-            circle at 50% 20%,
-            rgba(0, 245, 255, .09),
-            transparent 28%
+            circle at 50% 10%,
+            rgba(0,245,255,.11),
+            transparent 30%
         ),
         radial-gradient(
-            circle at 15% 85%,
-            rgba(0, 255, 120, .06),
+            circle at 5% 90%,
+            rgba(57,255,136,.07),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 100% 50%,
+            rgba(22,140,255,.07),
             transparent 25%
         ),
         linear-gradient(
-            #041017,
-            #010305
+            135deg,
+            #02070a,
+            #010304 70%
         );
 }
-
-/* Scanlines */
 
 .scanlines {
     position: absolute;
@@ -81,97 +102,96 @@ body {
             to bottom,
             transparent 0,
             transparent 3px,
-            rgba(0, 255, 255, .018) 4px
+            rgba(0,255,255,.018) 4px
         );
 
     pointer-events: none;
 }
 
-/* Grid */
-
 .grid {
     position: absolute;
-    inset: -100%;
 
-    opacity: .14;
+    width: 180%;
+    height: 100%;
+
+    left: -40%;
+    top: 30%;
+
+    opacity: .13;
 
     background-image:
         linear-gradient(
-            rgba(0, 245, 255, .12) 1px,
+            rgba(0,245,255,.16) 1px,
             transparent 1px
         ),
         linear-gradient(
             90deg,
-            rgba(0, 245, 255, .12) 1px,
+            rgba(0,245,255,.16) 1px,
             transparent 1px
         );
 
-    background-size: 45px 45px;
+    background-size: 48px 48px;
 
     transform:
-        perspective(550px)
-        rotateX(58deg);
+        perspective(650px)
+        rotateX(62deg);
 
-    transform-origin: center bottom;
+    transform-origin: center top;
 
-    animation:
-        gridMove 8s linear infinite;
+    animation: gridMove 7s linear infinite;
 }
 
 @keyframes gridMove {
     from {
         transform:
-            perspective(550px)
-            rotateX(58deg)
+            perspective(650px)
+            rotateX(62deg)
             translateY(0);
     }
 
     to {
         transform:
-            perspective(550px)
-            rotateX(58deg)
-            translateY(45px);
+            perspective(650px)
+            rotateX(62deg)
+            translateY(48px);
     }
 }
-
-/* Glows */
 
 .glow {
     position: absolute;
 
-    width: 450px;
-    height: 450px;
+    width: 500px;
+    height: 500px;
 
     border-radius: 50%;
 
-    filter: blur(120px);
+    filter: blur(130px);
 
-    opacity: .35;
+    opacity: .22;
 
-    animation:
-        glowMove 9s ease-in-out infinite alternate;
+    animation: glowMove 11s ease-in-out infinite alternate;
 }
 
 .glow.one {
-    left: -180px;
-    top: -180px;
+    left: -220px;
+    top: -220px;
     background: #00d9ff;
 }
 
 .glow.two {
-    right: -200px;
-    bottom: -200px;
-    background: #0077ff;
+    right: -240px;
+    bottom: -230px;
+    background: #0055ff;
     animation-delay: 2s;
 }
 
 @keyframes glowMove {
     from {
-        transform: translate(0, 0) scale(1);
+        transform: translate(0,0) scale(1);
     }
 
     to {
-        transform: translate(100px, 80px) scale(1.25);
+        transform: translate(90px,70px) scale(1.22);
     }
 }
 
@@ -182,20 +202,22 @@ body {
 .particles {
     position: fixed;
     inset: 0;
-    z-index: -5;
+    z-index: -10;
     pointer-events: none;
 }
 
 .particle {
     position: absolute;
 
-    width: 3px;
-    height: 3px;
+    width: 2px;
+    height: 2px;
 
     background: var(--cyan);
 
+    border-radius: 50%;
+
     box-shadow:
-        0 0 10px var(--cyan);
+        0 0 9px var(--cyan);
 
     animation:
         particleUp linear infinite;
@@ -212,7 +234,7 @@ body {
     }
 
     80% {
-        opacity: .4;
+        opacity: .3;
     }
 
     to {
@@ -226,10 +248,10 @@ body {
 ========================================================= */
 
 .app {
-    width: min(1100px, 94%);
-    min-height: 92vh;
+    width: min(1180px, 95%);
+    min-height: 94vh;
 
-    margin: 4vh auto;
+    margin: 3vh auto;
 
     display: flex;
     flex-direction: column;
@@ -237,20 +259,70 @@ body {
     overflow: hidden;
 
     background:
-        var(--panel);
+        linear-gradient(
+            145deg,
+            rgba(5,20,27,.94),
+            rgba(2,9,13,.94)
+        );
 
-    border:
-        1px solid var(--border);
+    border: 1px solid var(--border);
 
-    border-radius:
-        24px;
+    border-radius: 22px;
 
-    backdrop-filter:
-        blur(20px);
+    backdrop-filter: blur(22px);
 
     box-shadow:
-        0 0 70px rgba(0, 220, 255, .08),
-        inset 0 0 50px rgba(0, 245, 255, .025);
+        0 0 80px rgba(0,220,255,.07),
+        0 30px 100px rgba(0,0,0,.45),
+        inset 0 0 70px rgba(0,245,255,.018);
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    color: var(--muted);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+    letter-spacing: 1.2px;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.08);
+
+    background:
+        rgba(0,0,0,.2);
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.system-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--green);
+
+    box-shadow:
+        0 0 10px var(--green);
 }
 
 /* =========================================================
@@ -262,13 +334,13 @@ body {
     align-items: center;
     justify-content: space-between;
 
-    padding: 18px 24px;
-
-    background:
-        rgba(2, 11, 16, .85);
+    padding: 18px 22px;
 
     border-bottom:
         1px solid var(--border);
+
+    background:
+        rgba(2,11,16,.76);
 }
 
 .brand {
@@ -278,18 +350,20 @@ body {
 }
 
 /* =========================================================
-   CYBER SHIELD LOGO
+   SHIELD
 ========================================================= */
 
 .logo {
-    width: 58px;
+    position: relative;
+
+    width: 57px;
     height: 64px;
 
-    position: relative;
+    flex-shrink: 0;
 
     clip-path:
         polygon(
-            50% 0%,
+            50% 0,
             94% 16%,
             87% 70%,
             50% 100%,
@@ -301,27 +375,27 @@ body {
         linear-gradient(
             145deg,
             #00f5ff,
-            #0874ff 45%,
-            #07151f 46%
+            #0874ff 47%,
+            #07151f 48%
         );
 
-    box-shadow:
-        0 0 15px var(--cyan);
+    filter:
+        drop-shadow(0 0 7px #00cfff)
+        drop-shadow(0 0 18px rgba(0,245,255,.35));
 
     animation:
-        shieldPulse 2s infinite;
+        shieldPulse 3s infinite;
 }
 
 .logo::before {
     content: "";
 
     position: absolute;
-
     inset: 7px;
 
     clip-path:
         polygon(
-            50% 0%,
+            50% 0,
             94% 16%,
             87% 70%,
             50% 100%,
@@ -329,23 +403,24 @@ body {
             6% 16%
         );
 
-    background:
-        #061017;
+    background: #061017;
 }
-
-/* Digital lock */
 
 .logo::after {
     content: "01";
 
     position: absolute;
 
-    left: 11px;
-    top: 21px;
+    left: 13px;
+    top: 22px;
 
     color: var(--cyan);
 
-    font-size: 13px;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 12px;
     font-weight: bold;
 
     letter-spacing: 2px;
@@ -353,36 +428,25 @@ body {
     text-shadow:
         0 0 8px var(--cyan);
 
-    animation:
-        textFlicker 1.5s infinite;
+    animation: flicker 2s infinite;
 }
 
 @keyframes shieldPulse {
-
-    0%, 35%, 100% {
+    0%, 85%, 100% {
         transform: scale(1);
-
-        filter:
-            drop-shadow(0 0 5px #00bfff)
-            drop-shadow(0 0 12px rgba(0,245,255,.35));
     }
 
-    42% {
-        transform: scale(1.09);
+    90% {
+        transform: scale(1.08);
 
         filter:
-            brightness(1.8)
-            drop-shadow(0 0 8px #00f5ff)
-            drop-shadow(0 0 28px #00aaff)
-            drop-shadow(0 0 50px rgba(0,245,255,.6));
-    }
-
-    50% {
-        transform: scale(1);
+            brightness(1.7)
+            drop-shadow(0 0 10px var(--cyan))
+            drop-shadow(0 0 30px #008cff);
     }
 }
 
-@keyframes textFlicker {
+@keyframes flicker {
     0%, 90%, 100% {
         opacity: 1;
     }
@@ -396,11 +460,13 @@ body {
     }
 }
 
-/* Brand */
-
 .brand h1 {
     font-size: 24px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
+
+    font-family:
+        "Courier New",
+        monospace;
 }
 
 .brand h1 span {
@@ -408,29 +474,58 @@ body {
 
     text-shadow:
         0 0 8px var(--cyan),
-        0 0 20px rgba(0,245,255,.5);
+        0 0 22px rgba(0,245,255,.45);
 }
 
 .brand small {
+    display: block;
+
+    margin-top: 4px;
+
     color: var(--muted);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
 }
 
-/* Status */
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
+
+    padding: 8px 12px;
 
     color: var(--green);
 
-    font-size: 12px;
-    letter-spacing: 1px;
+    border:
+        1px solid rgba(57,255,136,.16);
+
+    border-radius: 999px;
+
+    background:
+        rgba(57,255,136,.035);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    letter-spacing: 1.4px;
 }
 
 .status-dot {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
 
     border-radius: 50%;
 
@@ -440,14 +535,131 @@ body {
         0 0 12px var(--green);
 
     animation:
-        statusPulse 1s infinite;
+        statusPulse 1.2s infinite;
 }
 
 @keyframes statusPulse {
     50% {
-        opacity: .25;
-        transform: scale(.7);
+        opacity: .3;
+        transform: scale(.65);
     }
+}
+
+/* =========================================================
+   MODULE BAR
+========================================================= */
+
+.modules {
+    display: flex;
+    gap: 7px;
+
+    padding: 10px 20px;
+
+    overflow-x: auto;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.08);
+
+    background:
+        rgba(0,0,0,.13);
+}
+
+.module {
+    flex-shrink: 0;
+
+    padding: 5px 9px;
+
+    color: #6d9ca4;
+
+    border:
+        1px solid rgba(0,245,255,.08);
+
+    border-radius: 5px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: .7px;
+
+    transition: .2s;
+}
+
+.module.active {
+    color: var(--cyan);
+
+    border-color:
+        rgba(0,245,255,.3);
+
+    background:
+        rgba(0,245,255,.04);
+
+    box-shadow:
+        0 0 12px rgba(0,245,255,.07);
+}
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 9px 20px;
+
+    border-bottom:
+        1px solid rgba(0,245,255,.07);
+
+    color: var(--muted);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+}
+
+.toolbar-left {
+    display: flex;
+    gap: 10px;
+}
+
+.tool-btn {
+    padding: 5px 9px;
+
+    color: #6d969e;
+
+    background: transparent;
+
+    border:
+        1px solid rgba(0,245,255,.1);
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+    font-size: 9px;
+
+    transition: .2s;
+}
+
+.tool-btn:hover {
+    color: var(--cyan);
+
+    border-color:
+        rgba(0,245,255,.35);
+
+    background:
+        rgba(0,245,255,.04);
+}
+
+.session {
+    color: #36555c;
 }
 
 /* =========================================================
@@ -461,13 +673,13 @@ body {
 
     overflow-y: auto;
 
-    padding: 28px;
+    padding: 27px 25px;
 
     scroll-behavior: smooth;
 }
 
 .chat::-webkit-scrollbar {
-    width: 7px;
+    width: 6px;
 }
 
 .chat::-webkit-scrollbar-track {
@@ -475,24 +687,24 @@ body {
 }
 
 .chat::-webkit-scrollbar-thumb {
-    background: #16434b;
+    background: #123b43;
     border-radius: 20px;
 }
 
 .message {
     display: flex;
-    gap: 12px;
+    gap: 11px;
 
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 
     animation:
-        messageIn .3s ease;
+        messageIn .28s ease;
 }
 
 @keyframes messageIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(9px);
     }
 
     to {
@@ -514,264 +726,303 @@ body {
     display: grid;
     place-items: center;
 
-    border-radius: 10px;
+    border-radius: 9px;
 
     background:
         #071c23;
 
     border:
-        1px solid rgba(0,245,255,.45);
+        1px solid rgba(0,245,255,.32);
 
     box-shadow:
-        0 0 14px rgba(0,245,255,.12);
+        0 0 15px rgba(0,245,255,.09);
+
+    font-size: 17px;
 }
 
 .user .avatar {
     order: 2;
 
-    background: #0d1924;
+    background: #0b1724;
 
     border-color:
-        rgba(80,150,255,.45);
+        rgba(60,150,255,.35);
 }
 
 .bubble {
-    max-width: min(720px, 80%);
+    position: relative;
 
-    padding: 14px 17px;
+    max-width: min(780px, 84%);
 
-    line-height: 1.55;
+    padding: 15px 17px;
 
-    font-size: 15px;
+    color: #d9eeee;
+
+    line-height: 1.62;
+
+    font-size: 14px;
 
     background:
-        rgba(6, 25, 31, .85);
+        linear-gradient(
+            145deg,
+            rgba(7,27,34,.92),
+            rgba(4,18,24,.92)
+        );
 
     border:
-        1px solid rgba(0,245,255,.13);
+        1px solid rgba(0,245,255,.11);
 
-    border-radius: 14px;
+    border-radius: 5px 15px 15px 15px;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.18);
+        0 12px 35px rgba(0,0,0,.18);
 }
 
 .user .bubble {
     background:
-        rgba(10, 27, 43, .9);
+        linear-gradient(
+            145deg,
+            rgba(10,31,50,.95),
+            rgba(6,20,35,.95)
+        );
 
-    border-color:
-        rgba(60,150,255,.2);
+    border:
+        1px solid rgba(60,150,255,.2);
+
+    border-radius:
+        15px 5px 15px 15px;
+}
+
+.bot-label {
+    margin-bottom: 8px;
+
+    color: var(--cyan);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 1.3px;
+}
+
+.user-label {
+    margin-bottom: 7px;
+
+    color: #70aaff;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
 }
 
 .bubble strong {
     color: var(--cyan);
 
     text-shadow:
-        0 0 8px rgba(0,245,255,.3);
+        0 0 7px rgba(0,245,255,.22);
+}
+
+.bubble em {
+    color: #9dc8ce;
 }
 
 .bubble code {
-    color: #65ffc2;
+    padding: 2px 6px;
+
+    color: #63ffc2;
 
     background:
-        rgba(0,0,0,.4);
+        rgba(0,0,0,.38);
 
     border:
         1px solid rgba(57,255,136,.12);
 
-    padding: 2px 6px;
+    border-radius: 4px;
 
-    border-radius: 5px;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: .9em;
 }
 
 /* =========================================================
-   SUGGESTIONS
+   CYBER RESPONSE COMPONENTS
 ========================================================= */
 
-.suggestions {
+.response-header {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-
-    padding:
-        0 28px 15px;
-}
-
-.suggestion {
-    padding:
-        9px 13px;
-
-    color:
-        #aeeff3;
-
-    background:
-        rgba(6, 29, 35, .7);
-
-    border:
-        1px solid rgba(0,245,255,.16);
-
-    border-radius:
-        999px;
-
-    cursor:
-        pointer;
-
-    font-size:
-        12px;
-
-    transition:
-        .2s;
-}
-
-.suggestion:hover {
-    color: white;
-
-    background:
-        rgba(0,100,120,.5);
-
-    border-color:
-        var(--cyan);
-
-    box-shadow:
-        0 0 16px rgba(0,245,255,.18);
-
-    transform:
-        translateY(-2px);
-}
-
-/* =========================================================
-   INPUT
-========================================================= */
-
-.input-area {
-    padding:
-        18px 24px 22px;
-
-    border-top:
-        1px solid rgba(0,245,255,.12);
-
-    background:
-        rgba(2, 9, 13, .8);
-}
-
-.input-box {
-    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     gap: 10px;
 
-    padding: 8px;
+    margin-bottom: 12px;
+}
+
+.module-tag {
+    display: inline-block;
+
+    padding: 5px 8px;
+
+    color: var(--cyan);
 
     background:
-        rgba(4, 20, 25, .95);
+        rgba(0,245,255,.045);
 
     border:
-        1px solid rgba(0,245,255,.2);
+        1px solid rgba(0,245,255,.19);
 
-    border-radius:
-        16px;
+    border-radius: 4px;
 
-    transition:
-        .2s;
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
 }
 
-.input-box:focus-within {
-    border-color:
-        var(--cyan);
+.threat {
+    padding: 4px 7px;
 
-    box-shadow:
-        0 0 25px rgba(0,245,255,.08);
+    border-radius: 4px;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
 }
 
-#userInput {
-    flex: 1;
+.threat.info {
+    color: var(--green);
+    border: 1px solid rgba(57,255,136,.2);
+    background: rgba(57,255,136,.04);
+}
 
-    padding: 12px;
+.threat.medium {
+    color: var(--yellow);
+    border: 1px solid rgba(255,230,109,.2);
+    background: rgba(255,230,109,.04);
+}
+
+.threat.high {
+    color: var(--red);
+    border: 1px solid rgba(255,61,113,.2);
+    background: rgba(255,61,113,.04);
+}
+
+.cyber-title {
+    margin-bottom: 8px;
 
     color: white;
 
-    background: transparent;
+    font-size: 16px;
+    font-weight: 700;
 
-    border: none;
-    outline: none;
-
-    font-size: 15px;
+    letter-spacing: .3px;
 }
 
-#userInput::placeholder {
-    color: #4e6970;
+.vocab {
+    margin: 13px 0;
+
+    padding: 12px;
+
+    background:
+        rgba(0,0,0,.18);
+
+    border-left:
+        2px solid var(--cyan);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 11px;
 }
 
-#sendBtn {
-    width: 50px;
-    height: 45px;
+.vocab-row {
+    display: grid;
+    grid-template-columns: 145px 1fr;
 
-    border: none;
-    border-radius: 11px;
+    gap: 10px;
 
-    color: #001012;
+    margin: 5px 0;
+}
+
+.vocab-key {
+    color: var(--green);
+}
+
+.vocab-value {
+    color: #8eafb5;
+}
+
+.tip {
+    margin-top: 14px;
+
+    padding: 11px 13px;
+
+    color: #b9dfe3;
 
     background:
         linear-gradient(
-            135deg,
-            #00f5ff,
-            #2cff9b
+            90deg,
+            rgba(57,255,136,.05),
+            transparent
         );
 
-    cursor: pointer;
+    border-left:
+        2px solid var(--green);
 
-    font-size: 20px;
-    font-weight: bold;
-
-    box-shadow:
-        0 0 18px rgba(0,245,255,.25);
-
-    transition:
-        .2s;
+    font-size: 12px;
 }
 
-#sendBtn:hover {
-    transform:
-        scale(1.06);
-
-    box-shadow:
-        0 0 28px rgba(0,245,255,.5);
-}
-
-#sendBtn:active {
-    transform:
-        scale(.94);
-}
-
-.footer {
-    margin-top: 9px;
-
-    text-align: center;
-
-    color: #405960;
-
-    font-size: 10px;
+.tip b {
+    color: var(--green);
 }
 
 /* =========================================================
    TYPING
 ========================================================= */
 
+.typing-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #547b83;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+}
+
 .typing {
     display: flex;
-    gap: 5px;
-
-    padding: 5px 2px;
+    gap: 4px;
 }
 
 .typing span {
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
 
-    background:
-        var(--cyan);
+    background: var(--cyan);
 
     box-shadow:
         0 0 8px var(--cyan);
@@ -791,26 +1042,218 @@ body {
 @keyframes typing {
     0%, 60%, 100% {
         transform: translateY(0);
-        opacity: .3;
+        opacity: .25;
     }
 
     30% {
-        transform: translateY(-6px);
+        transform: translateY(-5px);
         opacity: 1;
     }
+}
+
+/* =========================================================
+   SUGGESTIONS
+========================================================= */
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    padding:
+        0 25px 14px;
+}
+
+.suggestion {
+    padding: 8px 11px;
+
+    color: #91d0d6;
+
+    background:
+        rgba(6,29,35,.62);
+
+    border:
+        1px solid rgba(0,245,255,.12);
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 10px;
+
+    transition: .2s;
+}
+
+.suggestion:hover {
+    color: white;
+
+    border-color:
+        var(--cyan);
+
+    background:
+        rgba(0,100,120,.3);
+
+    box-shadow:
+        0 0 17px rgba(0,245,255,.13);
+
+    transform:
+        translateY(-2px);
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-area {
+    padding:
+        17px 22px 20px;
+
+    border-top:
+        1px solid rgba(0,245,255,.11);
+
+    background:
+        rgba(1,8,12,.82);
+}
+
+.input-box {
+    display: flex;
+    gap: 9px;
+
+    padding: 7px;
+
+    background:
+        rgba(4,20,26,.96);
+
+    border:
+        1px solid rgba(0,245,255,.19);
+
+    border-radius: 10px;
+
+    transition: .2s;
+}
+
+.input-box:focus-within {
+    border-color:
+        rgba(0,245,255,.65);
+
+    box-shadow:
+        0 0 25px rgba(0,245,255,.08);
+}
+
+.prompt {
+    display: flex;
+    align-items: center;
+
+    padding-left: 9px;
+
+    color: var(--green);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 12px;
+}
+
+#userInput {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 12px 7px;
+
+    color: white;
+
+    background: transparent;
+
+    border: none;
+    outline: none;
+
+    font-size: 14px;
+}
+
+#userInput::placeholder {
+    color: #45666e;
+}
+
+#sendBtn {
+    width: 49px;
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 8px;
+
+    color: #001012;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--cyan),
+            var(--green)
+        );
+
+    cursor: pointer;
+
+    font-size: 19px;
+    font-weight: bold;
+
+    box-shadow:
+        0 0 18px rgba(0,245,255,.23);
+
+    transition: .2s;
+}
+
+#sendBtn:hover {
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 28px rgba(0,245,255,.5);
+}
+
+#sendBtn:active {
+    transform: scale(.94);
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #365158;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size: 8px;
+
+    letter-spacing: .7px;
 }
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media(max-width: 650px) {
+@media(max-width: 700px) {
 
     .app {
         width: 100%;
         min-height: 100vh;
+
         margin: 0;
+
         border-radius: 0;
+    }
+
+    .topbar-right {
+        display: none;
     }
 
     .header {
@@ -821,26 +1264,52 @@ body {
         font-size: 19px;
     }
 
+    .brand small {
+        font-size: 8px;
+    }
+
     .logo {
-        width: 48px;
-        height: 54px;
+        width: 47px;
+        height: 53px;
+    }
+
+    .status {
+        padding: 7px;
+    }
+
+    .status span:last-child {
+        display: none;
+    }
+
+    .toolbar {
+        padding: 8px 13px;
     }
 
     .chat {
-        padding: 18px 14px;
+        padding: 18px 13px;
     }
 
     .suggestions {
-        padding-left: 14px;
-        padding-right: 14px;
+        padding:
+            0 13px 12px;
     }
 
     .input-area {
-        padding: 14px;
+        padding: 12px;
     }
 
     .bubble {
-        max-width: 86%;
+        max-width: 89%;
+        font-size: 13px;
+    }
+
+    .vocab-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .footer {
+        display: none;
     }
 }
 </style>
@@ -853,28 +1322,39 @@ body {
 ========================================================= -->
 
 <div class="background">
-
     <div class="grid"></div>
-
     <div class="glow one"></div>
-
     <div class="glow two"></div>
-
     <div class="scanlines"></div>
-
 </div>
 
-<div
-    class="particles"
-    id="particles">
-</div>
+<div class="particles" id="particles"></div>
 
 
 <!-- =========================================================
-     APP
+     APPLICATION
 ========================================================= -->
 
 <div class="app">
+
+    <!-- TOP SYSTEM BAR -->
+
+    <div class="topbar">
+
+        <div class="topbar-left">
+            <span class="system-dot"></span>
+            <span>CYBERAI://CORE</span>
+            <span id="clock">00:00:00</span>
+        </div>
+
+        <div class="topbar-right">
+            <span>ENCRYPTED SESSION</span>
+            <span>NODE: LOCAL</span>
+            <span>BUILD 2.0.0</span>
+        </div>
+
+    </div>
+
 
     <!-- HEADER -->
 
@@ -891,7 +1371,7 @@ body {
                 </h1>
 
                 <small>
-                    Cybersecurity Learning Assistant
+                    SECURITY INTELLIGENCE // COMMAND CONSOLE
                 </small>
 
             </div>
@@ -902,63 +1382,142 @@ body {
 
             <span class="status-dot"></span>
 
-            ONLINE
+            <span>CORE ONLINE</span>
 
         </div>
 
     </header>
 
 
-    <!-- =====================================================
-         CHAT
-    ====================================================== -->
+    <!-- MODULES -->
 
-    <main
-        class="chat"
-        id="chat">
+    <div class="modules">
+
+        <span class="module active">CORE</span>
+        <span class="module">RECON</span>
+        <span class="module">WEBSEC</span>
+        <span class="module">NETWORK</span>
+        <span class="module">BLUE TEAM</span>
+        <span class="module">MALWARE</span>
+        <span class="module">CRYPTO</span>
+        <span class="module">CLOUD</span>
+        <span class="module">DFIR</span>
+        <span class="module">CTF</span>
+
+    </div>
+
+
+    <!-- TOOLBAR -->
+
+    <div class="toolbar">
+
+        <div class="toolbar-left">
+
+            <button class="tool-btn" onclick="clearChat()">
+                CLEAR
+            </button>
+
+            <button class="tool-btn" onclick="exportChat()">
+                EXPORT
+            </button>
+
+            <button class="tool-btn" onclick="showRandomTip()">
+                CYBER TIP
+            </button>
+
+        </div>
+
+        <div class="session">
+            SESSION: <span id="sessionId">LOCAL</span>
+        </div>
+
+    </div>
+
+
+    <!-- CHAT -->
+
+    <main class="chat" id="chat">
 
         <div class="message bot">
 
-            <div class="avatar">
-                🛡️
-            </div>
+            <div class="avatar">🛡️</div>
 
             <div class="bubble">
 
-                <strong>CYBERAI</strong>
+                <div class="response-header">
 
-                <br><br>
+                    <span class="module-tag">
+                        CORE // INITIALIZATION
+                    </span>
 
-                Welcome to CyberAI. 🛡️
+                    <span class="threat info">
+                        INFO
+                    </span>
 
-                <br><br>
+                </div>
 
-                I can help you learn cybersecurity,
-                ethical hacking and defensive security.
+                <div class="cyber-title">
+                    CYBERAI SECURITY INTELLIGENCE CORE
+                </div>
 
-                <br><br>
+                <p>
+                    Welcome, operator.
+                </p>
 
-                Try asking about:
+                <br>
 
-                <br><br>
+                <p>
+                    The <strong>CyberAI knowledge engine</strong>
+                    is online and ready to analyze cybersecurity
+                    concepts, defensive architecture, threat
+                    terminology and security fundamentals.
+                </p>
 
-                🔐 Password security<br>
-                🌐 Network security<br>
-                🕸️ Web security<br>
-                🐛 Malware analysis<br>
-                🔎 Vulnerabilities<br>
-                🧪 CTFs and security labs<br>
-                🐧 Linux security<br>
-                🚨 Incident response<br>
-                🔒 Cryptography
+                <div class="vocab">
 
-                <br><br>
+                    <div class="vocab-row">
+                        <span class="vocab-key">RECON</span>
+                        <span class="vocab-value">
+                            Reconnaissance & asset discovery
+                        </span>
+                    </div>
 
-                <span style="color:#39ff88;">
-                    Use your skills responsibly and
-                    only test systems you are authorized
-                    to assess.
-                </span>
+                    <div class="vocab-row">
+                        <span class="vocab-key">WEBSEC</span>
+                        <span class="vocab-value">
+                            Web application security
+                        </span>
+                    </div>
+
+                    <div class="vocab-row">
+                        <span class="vocab-key">BLUE TEAM</span>
+                        <span class="vocab-value">
+                            Detection, hardening & defense
+                        </span>
+                    </div>
+
+                    <div class="vocab-row">
+                        <span class="vocab-key">DFIR</span>
+                        <span class="vocab-value">
+                            Digital forensics & incident response
+                        </span>
+                    </div>
+
+                    <div class="vocab-row">
+                        <span class="vocab-key">CTF</span>
+                        <span class="vocab-value">
+                            Authorized security challenges
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="tip">
+                    <b>CYBER TIP //</b>
+                    Learn the vocabulary and the architecture
+                    behind a vulnerability—not merely the name
+                    of the vulnerability.
+                </div>
 
             </div>
 
@@ -967,76 +1526,68 @@ body {
     </main>
 
 
-    <!-- =====================================================
-         SUGGESTIONS
-    ====================================================== -->
+    <!-- SUGGESTIONS -->
 
     <div class="suggestions">
 
-        <button
-            class="suggestion"
-            onclick="askSuggestion('What is ethical hacking?')">
-
-            🛡️ Ethical hacking
-
+        <button class="suggestion"
+            onclick="askSuggestion('Explain reconnaissance and OSINT')">
+            [RECON] OSINT
         </button>
 
-        <button
-            class="suggestion"
+        <button class="suggestion"
             onclick="askSuggestion('Explain SQL injection')">
-
-            🕸️ SQL injection
-
+            [WEBSEC] SQLi
         </button>
 
-        <button
-            class="suggestion"
-            onclick="askSuggestion('How can I secure my passwords?')">
-
-            🔐 Password security
-
-        </button>
-
-        <button
-            class="suggestion"
-            onclick="askSuggestion('What is a CTF?')">
-
-            🧪 CTFs
-
-        </button>
-
-        <button
-            class="suggestion"
-            onclick="askSuggestion('Explain network security')">
-
-            🌐 Network security
-
-        </button>
-
-        <button
-            class="suggestion"
+        <button class="suggestion"
             onclick="askSuggestion('What is XSS?')">
+            [WEBSEC] XSS
+        </button>
 
-            🕸️ XSS
+        <button class="suggestion"
+            onclick="askSuggestion('Explain zero trust')">
+            [NETWORK] ZERO TRUST
+        </button>
 
+        <button class="suggestion"
+            onclick="askSuggestion('What is SIEM?')">
+            [BLUE] SIEM
+        </button>
+
+        <button class="suggestion"
+            onclick="askSuggestion('Explain malware analysis')">
+            [MALWARE] ANALYSIS
+        </button>
+
+        <button class="suggestion"
+            onclick="askSuggestion('Explain cryptography')">
+            [CRYPTO] CRYPTOGRAPHY
+        </button>
+
+        <button class="suggestion"
+            onclick="askSuggestion('What is a CTF?')">
+            [CTF] START
         </button>
 
     </div>
 
 
-    <!-- =====================================================
-         INPUT
-    ====================================================== -->
+    <!-- INPUT -->
 
     <div class="input-area">
 
         <div class="input-box">
 
+            <div class="prompt">
+                >
+            </div>
+
             <input
                 id="userInput"
                 type="text"
                 autocomplete="off"
-                placeholder="Ask CyberAI a cybersecurity question..."
+                placeholder="Query the CyberAI intelligence core..."
             >
 
             <button id="sendBtn">
@@ -1046,7 +1597,15 @@ body {
         </div>
 
         <div class="footer">
-            CYBERAI • Cybersecurity Education • Defensive Security
+
+            <span>
+                CYBERAI // SECURITY EDUCATION // AUTHORIZED USE
+            </span>
+
+            <span>
+                ENTER = SEND
+            </span>
+
         </div>
 
     </div>
@@ -1057,7 +1616,7 @@ body {
 <script>
 
 /* =========================================================
-   CYBERAI — JAVASCRIPT
+   CYBERAI // JAVASCRIPT ENGINE
 ========================================================= */
 
 
@@ -1068,25 +1627,24 @@ body {
 const particles =
     document.getElementById("particles");
 
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 85; i++) {
 
     const particle =
         document.createElement("div");
 
-    particle.className =
-        "particle";
+    particle.className = "particle";
 
     particle.style.left =
         Math.random() * 100 + "%";
 
     particle.style.animationDuration =
-        (5 + Math.random() * 12) + "s";
+        (5 + Math.random() * 13) + "s";
 
     particle.style.animationDelay =
-        (-Math.random() * 12) + "s";
+        (-Math.random() * 15) + "s";
 
     const size =
-        2 + Math.random() * 3;
+        1.5 + Math.random() * 2.5;
 
     particle.style.width =
         size + "px";
@@ -1094,9 +1652,7 @@ for (let i = 0; i < 70; i++) {
     particle.style.height =
         size + "px";
 
-    particles.appendChild(
-        particle
-    );
+    particles.appendChild(particle);
 }
 
 
@@ -1113,9 +1669,51 @@ const input =
 const sendBtn =
     document.getElementById("sendBtn");
 
+const clock =
+    document.getElementById("clock");
+
 
 /* =========================================================
-   ESCAPE USER INPUT
+   CLOCK
+========================================================= */
+
+function updateClock() {
+
+    const now =
+        new Date();
+
+    clock.textContent =
+        now.toLocaleTimeString(
+            [],
+            {
+                hour12: false
+            }
+        );
+}
+
+setInterval(updateClock, 1000);
+
+updateClock();
+
+
+/* =========================================================
+   SESSION ID
+========================================================= */
+
+const sessionId =
+    Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+document.getElementById(
+    "sessionId"
+).textContent =
+    sessionId;
+
+
+/* =========================================================
+   ESCAPE
 ========================================================= */
 
 function escapeHTML(text) {
@@ -1131,531 +1729,1582 @@ function escapeHTML(text) {
 
 
 /* =========================================================
-   ADD MESSAGE
-========================================================= */
-
-function addMessage(
-    text,
-    type = "bot"
-) {
-
-    const message =
-        document.createElement("div");
-
-    message.className =
-        "message " + type;
-
-    const avatar =
-        type === "bot"
-            ? "🛡️"
-            : "👤";
-
-    message.innerHTML = `
-
-        <div class="avatar">
-            ${avatar}
-        </div>
-
-        <div class="bubble">
-            ${text}
-        </div>
-
-    `;
-
-    chat.appendChild(
-        message
-    );
-
-    chat.scrollTop =
-        chat.scrollHeight;
-}
-
-
-/* =========================================================
-   TYPING INDICATOR
-========================================================= */
-
-function showTyping() {
-
-    const message =
-        document.createElement("div");
-
-    message.className =
-        "message bot";
-
-    message.id =
-        "typingMessage";
-
-    message.innerHTML = `
-
-        <div class="avatar">
-            🛡️
-        </div>
-
-        <div class="bubble">
-
-            <div class="typing">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </div>
-
-        </div>
-
-    `;
-
-    chat.appendChild(
-        message
-    );
-
-    chat.scrollTop =
-        chat.scrollHeight;
-}
-
-
-function removeTyping() {
-
-    const typing =
-        document.getElementById(
-            "typingMessage"
-        );
-
-    if (typing) {
-        typing.remove();
-    }
-}
-
-
-/* =========================================================
-   SAFE CYBERSECURITY KNOWLEDGE BASE
+   CYBER KNOWLEDGE DATABASE
 ========================================================= */
 
 const knowledge = [
 
-    {
-        keywords: [
-            "ethical hacking",
-            "ethical hacker"
-        ],
-
-        answer: `
-        🛡️ <strong>Ethical Hacking</strong>
-
-        <br><br>
-
-        Ethical hacking is authorized security
-        testing performed to identify and help
-        fix vulnerabilities.
-
-        <br><br>
-
-        A legitimate assessment normally has:
-
-        <br><br>
-
-        • Permission from the system owner<br>
-        • A defined scope<br>
-        • Testing rules<br>
-        • Documentation<br>
-        • Responsible reporting
-
-        <br><br>
-
-        Practice on systems you own or on
-        intentionally vulnerable labs and CTFs.
-        `
-    },
-
-
-    {
-        keywords: [
-            "sql injection",
-            "sqli"
-        ],
-
-        answer: `
-        🕸️ <strong>SQL Injection</strong>
-
-        <br><br>
-
-        SQL injection occurs when untrusted input
-        is incorrectly incorporated into database
-        queries.
-
-        <br><br>
-
-        Potential consequences include unauthorized
-        access to application data or modification
-        of database information.
-
-        <br><br>
-
-        🛡️ <strong>Defenses:</strong>
-
-        <br>
-
-        • Parameterized queries<br>
-        • Prepared statements<br>
-        • Input validation<br>
-        • Least-privilege database accounts<br>
-        • Secure error handling
-
-        <br><br>
-
-        You can safely practice this concept in
-        intentionally vulnerable web-security labs.
-        `
-    },
-
-
-    {
-        keywords: [
-            "xss",
-            "cross site scripting"
-        ],
-
-        answer: `
-        🕸️ <strong>Cross-Site Scripting (XSS)</strong>
-
-        <br><br>
-
-        XSS is a web-security vulnerability where
-        attacker-controlled content can be interpreted
-        as script in another user's browser.
-
-        <br><br>
-
-        Common defenses include:
-
-        <br><br>
-
-        • Context-aware output encoding<br>
-        • Input validation<br>
-        • Content Security Policy<br>
-        • Safe templating systems<br>
-        • Avoiding unsafe HTML injection
-
-        `
-    },
-
-
-    {
-        keywords: [
-            "password",
-            "passwords"
-        ],
-
-        answer: `
-        🔐 <strong>Password Security</strong>
-
-        <br><br>
-
-        Good password security includes:
-
-        <br><br>
-
-        • Long unique passwords<br>
-        • A password manager<br>
-        • Multi-factor authentication<br>
-        • Protection against credential reuse<br>
-        • Secure password hashing on servers
-
-        <br><br>
-
-        Modern systems should use dedicated
-        password-hashing algorithms rather than
-        storing plaintext passwords.
-        `
-    },
-
-
-    {
-        keywords: [
-            "network security",
-            "network"
-        ],
-
-        answer: `
-        🌐 <strong>Network Security</strong>
-
-        <br><br>
-
-        Network security protects systems and
-        communications from unauthorized access
-        and abuse.
-
-        <br><br>
-
-        Important concepts include:
-
-        <br><br>
-
-        • Firewalls<br>
-        • Network segmentation<br>
-        • Secure protocols<br>
-        • Access control<br>
-        • Monitoring and logging<br>
-        • Patch management
-        `
-    },
-
-
-    {
-        keywords: [
-            "ctf",
-            "capture the flag"
-        ],
-
-        answer: `
-        🧪 <strong>Capture The Flag</strong>
-
-        <br><br>
-
-        CTFs are security competitions where
-        participants solve intentionally designed
-        challenges.
-
-        <br><br>
-
-        Common categories include:
-
-        <br><br>
-
-        🔐 Cryptography<br>
-        🌐 Web security<br>
-        🔎 Forensics<br>
-        💻 Reverse engineering<br>
-        🧩 Miscellaneous puzzles
-
-        <br><br>
-
-        CTF platforms are a good way to practice
-        security skills in authorized environments.
-        `
-    },
-
-
-    {
-        keywords: [
-            "malware",
-            "malware analysis"
-        ],
-
-        answer: `
-        🐛 <strong>Malware Analysis</strong>
-
-        <br><br>
-
-        Malware analysis examines malicious software
-        to understand its behavior and indicators.
-
-        <br><br>
-
-        Two broad approaches are:
-
-        <br><br>
-
-        <strong>Static analysis</strong> — examining a
-        sample without executing it.
-
-        <br><br>
-
-        <strong>Dynamic analysis</strong> — observing
-        behavior inside an isolated analysis environment.
-
-        <br><br>
-
-        Malware should be handled in properly
-        isolated environments.
-        `
-    },
-
-
-    {
-        keywords: [
-            "phishing"
-        ],
-
-        answer: `
-        🎣 <strong>Phishing</strong>
-
-        <br><br>
-
-        Phishing attempts to trick people into
-        revealing information or performing an
-        unwanted action.
-
-        <br><br>
-
-        Defensive practices include:
-
-        <br><br>
-
-        • Checking unexpected links<br>
-        • Verifying senders through another channel<br>
-        • Using MFA<br>
-        • Training users<br>
-        • Using email security controls
-        `
-    },
-
-
-    {
-        keywords: [
-            "firewall"
-        ],
-
-        answer: `
-        🔥 <strong>Firewalls</strong>
-
-        <br><br>
-
-        A firewall controls network traffic according
-        to configured security rules.
-
-        <br><br>
-
-        Firewalls can help restrict unnecessary
-        connections and reduce the attack surface.
-
-        <br><br>
-
-        They work best as one part of a broader
-        defense strategy.
-        `
-    },
-
-
-    {
-        keywords: [
-            "cryptography",
-            "encryption",
-            "encrypt"
-        ],
-
-        answer: `
-        🔒 <strong>Cryptography</strong>
-
-        <br><br>
-
-        Cryptography provides mechanisms for protecting
-        information and communications.
-
-        <br><br>
-
-        Important concepts include:
-
-        <br><br>
-
-        • Encryption<br>
-        • Hashing<br>
-        • Digital signatures<br>
-        • Key management<br>
-        • Authentication
-
-        <br><br>
-
-        Encryption protects confidentiality, while
-        cryptographic hashes are commonly used for
-        integrity and other security purposes.
-        `
-    },
-
-
-    {
-        keywords: [
-            "linux",
-            "linux security"
-        ],
-
-        answer: `
-        🐧 <strong>Linux Security</strong>
-
-        <br><br>
-
-        Useful defensive practices include:
-
-        <br><br>
-
-        • Keeping packages updated<br>
-        • Using least privilege<br>
-        • Reviewing logs<br>
-        • Restricting unnecessary services<br>
-        • Using strong authentication<br>
-        • Applying appropriate file permissions
-        `
-    },
-
-
-    {
-        keywords: [
-            "vulnerability",
-            "vulnerabilities"
-        ],
-
-        answer: `
-        🔎 <strong>Vulnerabilities</strong>
-
-        <br><br>
-
-        A vulnerability is a weakness that could
-        potentially be abused to violate security
-        properties.
-
-        <br><br>
-
-        A responsible vulnerability-management
-        process usually includes:
-
-        <br><br>
-
-        1. Identify assets.<br>
-        2. Discover vulnerabilities.<br>
-        3. Assess risk.<br>
-        4. Remediate.<br>
-        5. Verify the fix.<br>
-        6. Continue monitoring.
-        `
-    },
-
-
-    {
-        keywords: [
-            "incident response",
-            "incident"
-        ],
-
-        answer: `
-        🚨 <strong>Incident Response</strong>
-
-        <br><br>
-
-        Incident response is the process of handling
+/* ---------------------------------------------------------
+   RECON
+--------------------------------------------------------- */
+
+{
+    module: "RECON",
+    threat: "info",
+
+    keywords: [
+        "recon",
+        "reconnaissance",
+        "osint",
+        "enumeration",
+        "fingerprinting",
+        "attack surface"
+    ],
+
+    title:
+        "Reconnaissance & Attack Surface",
+
+    answer: `
+        <p>
+        Reconnaissance is the process of collecting
+        information about an environment before a
+        security assessment or defensive investigation.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">OSINT</span>
+                <span class="vocab-value">
+                    Open-Source Intelligence
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">ENUMERATION</span>
+                <span class="vocab-value">
+                    Identifying available resources and services
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">FINGERPRINTING</span>
+                <span class="vocab-value">
+                    Identifying technologies and configurations
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">ATTACK SURFACE</span>
+                <span class="vocab-value">
+                    Exposed components that may create security risk
+                </span>
+            </div>
+
+        </div>
+
+        <p>
+        From a defensive perspective, reconnaissance
+        helps organizations understand what they have
+        exposed so unnecessary exposure can be reduced.
+        </p>
+
+        <div class="tip">
+            <b>DEFENSIVE OBJECTIVE //</b>
+            Maintain an accurate inventory of assets,
+            services, domains, applications and identities.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   SQL INJECTION
+--------------------------------------------------------- */
+
+{
+    module: "WEBSEC",
+    threat: "high",
+
+    keywords: [
+        "sql injection",
+        "sqli",
+        "sql"
+    ],
+
+    title:
+        "SQL Injection",
+
+    answer: `
+        <p>
+        SQL injection is a vulnerability in which
+        untrusted application input can improperly
+        influence database queries.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">PARAMETERIZATION</span>
+                <span class="vocab-value">
+                    Separating data from SQL instructions
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PREPARED STATEMENT</span>
+                <span class="vocab-value">
+                    A database query structure using parameters
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">LEAST PRIVILEGE</span>
+                <span class="vocab-value">
+                    Giving database accounts only required permissions
+                </span>
+            </div>
+
+        </div>
+
+        <p>
+        Potential impact depends on application design,
+        database permissions and other controls.
+        </p>
+
+        <div class="tip">
+            <b>PRIMARY DEFENSE //</b>
+            Use parameterized queries or prepared statements.
+            Combine that with least privilege and secure
+            error handling.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   XSS
+--------------------------------------------------------- */
+
+{
+    module: "WEBSEC",
+    threat: "high",
+
+    keywords: [
+        "xss",
+        "cross site scripting",
+        "cross-site scripting"
+    ],
+
+    title:
+        "Cross-Site Scripting",
+
+    answer: `
+        <p>
+        Cross-Site Scripting, commonly called
+        <strong>XSS</strong>, occurs when attacker-controlled
+        content can be interpreted as executable script
+        within another user's browser context.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">REFLECTED XSS</span>
+                <span class="vocab-value">
+                    Malicious input reflected through a response
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">STORED XSS</span>
+                <span class="vocab-value">
+                    Malicious content persisted by an application
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">DOM XSS</span>
+                <span class="vocab-value">
+                    Client-side behavior creates the vulnerability
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">CSP</span>
+                <span class="vocab-value">
+                    Content Security Policy
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Use context-aware output encoding, safe templating,
+            appropriate validation and a carefully designed CSP.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   CSRF
+--------------------------------------------------------- */
+
+{
+    module: "WEBSEC",
+    threat: "medium",
+
+    keywords: [
+        "csrf",
+        "cross site request forgery",
+        "request forgery"
+    ],
+
+    title:
+        "Cross-Site Request Forgery",
+
+    answer: `
+        <p>
+        CSRF abuses the trust a web application places
+        in an authenticated user's browser.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">CSRF TOKEN</span>
+                <span class="vocab-value">
+                    Server-validated unpredictable request value
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SAMESITE</span>
+                <span class="vocab-value">
+                    Cookie attribute controlling cross-site behavior
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Use appropriate CSRF protections, secure cookie
+            attributes and server-side request validation.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   SSRF
+--------------------------------------------------------- */
+
+{
+    module: "WEBSEC",
+    threat: "high",
+
+    keywords: [
+        "ssrf",
+        "server side request forgery",
+        "server-side request forgery"
+    ],
+
+    title:
+        "Server-Side Request Forgery",
+
+    answer: `
+        <p>
+        SSRF occurs when an application can be manipulated
+        into making unintended network requests on behalf
+        of a user.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">TRUST BOUNDARY</span>
+                <span class="vocab-value">
+                    Boundary separating security domains
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">EGRESS CONTROL</span>
+                <span class="vocab-value">
+                    Restricting outbound network communication
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Restrict outbound destinations, validate URLs carefully,
+            segment sensitive services and avoid assuming internal
+            network locations are inherently trusted.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   IDOR / BOLA
+--------------------------------------------------------- */
+
+{
+    module: "WEBSEC",
+    threat: "high",
+
+    keywords: [
+        "idor",
+        "bola",
+        "broken object level authorization",
+        "object authorization"
+    ],
+
+    title:
+        "Broken Object-Level Authorization",
+
+    answer: `
+        <p>
+        IDOR and related BOLA vulnerabilities occur when
+        an application exposes an object reference but fails
+        to properly verify whether the requesting user is
+        authorized to access that object.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">AUTHENTICATION</span>
+                <span class="vocab-value">
+                    Establishing who a user is
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">AUTHORIZATION</span>
+                <span class="vocab-value">
+                    Determining what that user may access
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">BOLA</span>
+                <span class="vocab-value">
+                    Broken Object-Level Authorization
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Enforce authorization server-side for every
+            sensitive object access.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   NETWORK
+--------------------------------------------------------- */
+
+{
+    module: "NETWORK",
+    threat: "info",
+
+    keywords: [
+        "network security",
+        "network",
+        "tcp",
+        "udp",
+        "dns",
+        "tls",
+        "vpn"
+    ],
+
+    title:
+        "Network Security Fundamentals",
+
+    answer: `
+        <p>
+        Network security protects communications,
+        systems and services from unauthorized access,
+        disruption and abuse.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">TCP/IP</span>
+                <span class="vocab-value">
+                    Core networking protocol suite
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">DNS</span>
+                <span class="vocab-value">
+                    Domain Name System
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">TLS</span>
+                <span class="vocab-value">
+                    Transport Layer Security
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">VPN</span>
+                <span class="vocab-value">
+                    Virtual Private Network
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSIVE STACK //</b>
+            Segmentation + secure protocols + access control +
+            monitoring + patch management.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   ZERO TRUST
+--------------------------------------------------------- */
+
+{
+    module: "NETWORK",
+    threat: "info",
+
+    keywords: [
+        "zero trust",
+        "zerotrust"
+    ],
+
+    title:
+        "Zero Trust Architecture",
+
+    answer: `
+        <p>
+        Zero Trust is a security architecture based on
+        the principle that access should not be automatically
+        trusted simply because a user or device is inside
+        a network boundary.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">VERIFY</span>
+                <span class="vocab-value">
+                    Continuously evaluate identity and context
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">LEAST PRIVILEGE</span>
+                <span class="vocab-value">
+                    Grant only required access
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SEGMENTATION</span>
+                <span class="vocab-value">
+                    Limit unnecessary lateral movement
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>CORE IDEA //</b>
+            Network location alone should not be treated as
+            proof of trust.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   FIREWALL
+--------------------------------------------------------- */
+
+{
+    module: "NETWORK",
+    threat: "info",
+
+    keywords: [
+        "firewall",
+        "firewalls"
+    ],
+
+    title:
+        "Firewall Architecture",
+
+    answer: `
+        <p>
+        A firewall controls network traffic according to
+        configured rules and security policies.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">INGRESS</span>
+                <span class="vocab-value">
+                    Incoming traffic
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">EGRESS</span>
+                <span class="vocab-value">
+                    Outgoing traffic
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">STATEFUL</span>
+                <span class="vocab-value">
+                    Tracks connection state
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>REMEMBER //</b>
+            A firewall is one layer of defense—not a complete
+            security architecture.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   SIEM
+--------------------------------------------------------- */
+
+{
+    module: "BLUE TEAM",
+    threat: "info",
+
+    keywords: [
+        "siem",
+        "security information",
+        "security event"
+    ],
+
+    title:
+        "SIEM // Security Information and Event Management",
+
+    answer: `
+        <p>
+        A SIEM platform collects and analyzes security
+        telemetry from multiple sources to support
+        detection, investigation and incident response.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">LOG</span>
+                <span class="vocab-value">
+                    Recorded system or application event
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">CORRELATION</span>
+                <span class="vocab-value">
+                    Connecting related events
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">IOC</span>
+                <span class="vocab-value">
+                    Indicator of Compromise
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">ALERT</span>
+                <span class="vocab-value">
+                    Detection requiring investigation
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>BLUE TEAM //</b>
+            Good detection depends on useful telemetry,
+            sensible correlation and analysts who understand
+            the environment.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   EDR
+--------------------------------------------------------- */
+
+{
+    module: "BLUE TEAM",
+    threat: "info",
+
+    keywords: [
+        "edr",
+        "endpoint detection",
+        "endpoint response"
+    ],
+
+    title:
+        "EDR // Endpoint Detection & Response",
+
+    answer: `
+        <p>
+        EDR solutions monitor endpoint activity and provide
+        telemetry that can help defenders detect and investigate
+        suspicious behavior.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">TELEMETRY</span>
+                <span class="vocab-value">
+                    Security-relevant endpoint observations
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">BEHAVIOR</span>
+                <span class="vocab-value">
+                    Observable activity rather than simple signatures
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">CONTAINMENT</span>
+                <span class="vocab-value">
+                    Limiting an incident's spread or impact
+                </span>
+            </div>
+
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   MALWARE
+--------------------------------------------------------- */
+
+{
+    module: "MALWARE",
+    threat: "high",
+
+    keywords: [
+        "malware",
+        "malware analysis",
+        "trojan",
+        "virus",
+        "worm",
+        "ransomware"
+    ],
+
+    title:
+        "Malware Analysis",
+
+    answer: `
+        <p>
+        Malware analysis examines suspicious software
+        to understand its behavior, capabilities and
+        indicators.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">STATIC ANALYSIS</span>
+                <span class="vocab-value">
+                    Examine a sample without executing it
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">DYNAMIC ANALYSIS</span>
+                <span class="vocab-value">
+                    Observe behavior in an isolated environment
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">IOC</span>
+                <span class="vocab-value">
+                    Indicator of Compromise
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">C2</span>
+                <span class="vocab-value">
+                    Command and Control infrastructure
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PERSISTENCE</span>
+                <span class="vocab-value">
+                    Mechanisms allowing unwanted software to survive
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>LAB RULE //</b>
+            Analyze suspicious samples only in properly isolated,
+            controlled environments.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   PHISHING
+--------------------------------------------------------- */
+
+{
+    module: "BLUE TEAM",
+    threat: "medium",
+
+    keywords: [
+        "phishing",
+        "spear phishing",
+        "social engineering"
+    ],
+
+    title:
+        "Phishing & Social Engineering",
+
+    answer: `
+        <p>
+        Phishing uses deceptive communication to manipulate
+        a person into revealing information or performing
+        an unintended action.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">PHISHING</span>
+                <span class="vocab-value">
+                    Broad deceptive messaging
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SPEAR PHISHING</span>
+                <span class="vocab-value">
+                    Targeted phishing
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PRETEXTING</span>
+                <span class="vocab-value">
+                    Fabricated scenario used for manipulation
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">MFA</span>
+                <span class="vocab-value">
+                    Multi-Factor Authentication
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Verify unexpected requests, use MFA, inspect links
+            carefully and confirm sensitive requests through
+            trusted channels.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   CRYPTO
+--------------------------------------------------------- */
+
+{
+    module: "CRYPTO",
+    threat: "info",
+
+    keywords: [
+        "cryptography",
+        "encryption",
+        "encrypt",
+        "hashing",
+        "hash",
+        "aes",
+        "rsa",
+        "ecc"
+    ],
+
+    title:
+        "Cryptography Fundamentals",
+
+    answer: `
+        <p>
+        Cryptography provides mathematical mechanisms for
+        confidentiality, integrity, authentication and
+        related security properties.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">AES</span>
+                <span class="vocab-value">
+                    Symmetric encryption algorithm
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">RSA</span>
+                <span class="vocab-value">
+                    Public-key cryptographic algorithm
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">ECC</span>
+                <span class="vocab-value">
+                    Elliptic Curve Cryptography
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">HASH</span>
+                <span class="vocab-value">
+                    One-way cryptographic transformation
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PKI</span>
+                <span class="vocab-value">
+                    Public Key Infrastructure
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>IMPORTANT //</b>
+            Encryption and hashing solve different problems.
+            Encryption is designed to be reversible with the
+            appropriate key; cryptographic hashing is designed
+            as a one-way transformation.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   PASSWORDS
+--------------------------------------------------------- */
+
+{
+    module: "IDENTITY",
+    threat: "info",
+
+    keywords: [
+        "password",
+        "passwords",
+        "credential",
+        "credentials"
+    ],
+
+    title:
+        "Credential Security",
+
+    answer: `
+        <p>
+        Strong credential security reduces the probability
+        that stolen or guessed credentials can be reused
+        against important systems.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">MFA</span>
+                <span class="vocab-value">
+                    Multi-Factor Authentication
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PASSWORD MANAGER</span>
+                <span class="vocab-value">
+                    Tool for generating and storing unique credentials
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SALT</span>
+                <span class="vocab-value">
+                    Unique value used with password hashing
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PEPPER</span>
+                <span class="vocab-value">
+                    Additional secret used in some password systems
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>BEST PRACTICE //</b>
+            Use unique long passwords, a password manager and
+            MFA wherever practical.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   IAM
+--------------------------------------------------------- */
+
+{
+    module: "IDENTITY",
+    threat: "info",
+
+    keywords: [
+        "iam",
+        "identity access management",
+        "rbac",
+        "abac",
+        "pam",
+        "sso",
+        "oauth",
+        "saml"
+    ],
+
+    title:
+        "Identity & Access Management",
+
+    answer: `
+        <p>
+        IAM controls identities, authentication and
+        authorization across applications and infrastructure.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">RBAC</span>
+                <span class="vocab-value">
+                    Role-Based Access Control
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">ABAC</span>
+                <span class="vocab-value">
+                    Attribute-Based Access Control
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PAM</span>
+                <span class="vocab-value">
+                    Privileged Access Management
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SSO</span>
+                <span class="vocab-value">
+                    Single Sign-On
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>SECURITY PRINCIPLE //</b>
+            Grant access according to verified identity,
+            business need and least privilege.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   CLOUD
+--------------------------------------------------------- */
+
+{
+    module: "CLOUD",
+    threat: "medium",
+
+    keywords: [
+        "cloud security",
+        "cloud",
+        "aws",
+        "azure",
+        "gcp",
+        "cloud security"
+    ],
+
+    title:
+        "Cloud Security",
+
+    answer: `
+        <p>
+        Cloud security focuses on protecting identities,
+        workloads, data, networks and services operating
+        in cloud environments.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">IAM</span>
+                <span class="vocab-value">
+                    Identity and Access Management
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">MISCONFIGURATION</span>
+                <span class="vocab-value">
+                    Incorrect security or service configuration
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SECRETS</span>
+                <span class="vocab-value">
+                    Credentials, keys and sensitive tokens
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SEGMENTATION</span>
+                <span class="vocab-value">
+                    Restricting communication between components
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>CLOUD RULE //</b>
+            Treat identities and configuration as major parts
+            of the cloud attack surface.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   DOCKER / CONTAINERS
+--------------------------------------------------------- */
+
+{
+    module: "CLOUD",
+    threat: "info",
+
+    keywords: [
+        "docker",
+        "container",
+        "containers",
+        "kubernetes",
+        "k8s"
+    ],
+
+    title:
+        "Container Security",
+
+    answer: `
+        <p>
+        Container security covers images, runtime behavior,
+        orchestration, secrets, network policies and
+        supply-chain dependencies.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">IMAGE</span>
+                <span class="vocab-value">
+                    Packaged filesystem and application definition
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">RUNTIME</span>
+                <span class="vocab-value">
+                    Environment where containers execute
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">KUBERNETES</span>
+                <span class="vocab-value">
+                    Container orchestration platform
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DEFENSE //</b>
+            Scan images, minimize privileges, protect secrets,
+            keep dependencies updated and restrict unnecessary
+            container communication.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   INCIDENT RESPONSE
+--------------------------------------------------------- */
+
+{
+    module: "DFIR",
+    threat: "high",
+
+    keywords: [
+        "incident response",
+        "incident",
+        "dfir",
+        "digital forensics",
+        "forensics"
+    ],
+
+    title:
+        "Incident Response & DFIR",
+
+    answer: `
+        <p>
+        Incident response is the structured process used
+        to identify, contain, investigate and recover from
         cybersecurity incidents.
+        </p>
 
-        <br><br>
+        <div class="vocab">
 
-        Common stages include:
+            <div class="vocab-row">
+                <span class="vocab-key">TRIAGE</span>
+                <span class="vocab-value">
+                    Initial prioritization and assessment
+                </span>
+            </div>
 
-        <br><br>
+            <div class="vocab-row">
+                <span class="vocab-key">CONTAINMENT</span>
+                <span class="vocab-value">
+                    Limit spread or impact
+                </span>
+            </div>
 
-        • Preparation<br>
-        • Detection<br>
-        • Analysis<br>
-        • Containment<br>
-        • Eradication<br>
-        • Recovery<br>
-        • Lessons learned
-        `
-    }
+            <div class="vocab-row">
+                <span class="vocab-key">ERADICATION</span>
+                <span class="vocab-value">
+                    Remove the cause or malicious presence
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">RECOVERY</span>
+                <span class="vocab-value">
+                    Restore normal operations safely
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>DFIR //</b>
+            Preserve useful evidence, document decisions and
+            maintain a defensible timeline of events.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   CTF
+--------------------------------------------------------- */
+
+{
+    module: "CTF",
+    threat: "info",
+
+    keywords: [
+        "ctf",
+        "capture the flag",
+        "pwn",
+        "reverse engineering",
+        "steganography",
+        "forensics challenge"
+    ],
+
+    title:
+        "Capture The Flag",
+
+    answer: `
+        <p>
+        CTFs are intentionally designed security challenges
+        that let learners practice technical concepts in
+        controlled environments.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">WEB</span>
+                <span class="vocab-value">
+                    Web application challenges
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">PWN</span>
+                <span class="vocab-value">
+                    Binary exploitation category
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">REV</span>
+                <span class="vocab-value">
+                    Reverse engineering
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">FORENSICS</span>
+                <span class="vocab-value">
+                    Investigating digital artifacts
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">STEG</span>
+                <span class="vocab-value">
+                    Steganography
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>CTF RULE //</b>
+            Practice on challenges specifically designed
+            for security research and learning.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   LINUX
+--------------------------------------------------------- */
+
+{
+    module: "LINUX",
+    threat: "info",
+
+    keywords: [
+        "linux",
+        "linux security",
+        "chmod",
+        "permissions",
+        "sudo"
+    ],
+
+    title:
+        "Linux Security",
+
+    answer: `
+        <p>
+        Linux security involves identity management,
+        permissions, service hardening, patching,
+        logging and system monitoring.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">LEAST PRIVILEGE</span>
+                <span class="vocab-value">
+                    Minimize unnecessary permissions
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">FILE PERMISSIONS</span>
+                <span class="vocab-value">
+                    Read, write and execute access controls
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">SUDO</span>
+                <span class="vocab-value">
+                    Controlled privilege elevation
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>HARDENING //</b>
+            Remove unnecessary services, patch regularly,
+            restrict privileges and monitor logs.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   VULNERABILITY
+--------------------------------------------------------- */
+
+{
+    module: "VULN MGMT",
+    threat: "medium",
+
+    keywords: [
+        "vulnerability",
+        "vulnerabilities",
+        "cve",
+        "cvss",
+        "patch",
+        "patching"
+    ],
+
+    title:
+        "Vulnerability Management",
+
+    answer: `
+        <p>
+        Vulnerability management is the continuous process
+        of identifying, assessing, prioritizing and remediating
+        weaknesses in systems and applications.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">CVE</span>
+                <span class="vocab-value">
+                    Common Vulnerabilities and Exposures identifier
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">CVSS</span>
+                <span class="vocab-value">
+                    Common Vulnerability Scoring System
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">REMEDIATION</span>
+                <span class="vocab-value">
+                    Fixing or reducing vulnerability risk
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>PROCESS //</b>
+            Discover → assess → prioritize → remediate →
+            verify → monitor.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   API SECURITY
+--------------------------------------------------------- */
+
+{
+    module: "APISEC",
+    threat: "medium",
+
+    keywords: [
+        "api security",
+        "api",
+        "rest api",
+        "jwt",
+        "api authentication"
+    ],
+
+    title:
+        "API Security",
+
+    answer: `
+        <p>
+        API security protects application interfaces from
+        unauthorized access, excessive data exposure,
+        abuse and implementation weaknesses.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">JWT</span>
+                <span class="vocab-value">
+                    JSON Web Token
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">RATE LIMITING</span>
+                <span class="vocab-value">
+                    Restricting request frequency
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">AUTHORIZATION</span>
+                <span class="vocab-value">
+                    Checking whether an identity may perform an action
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>API DEFENSE //</b>
+            Validate authentication, authorization, input,
+            output and request volume at the server.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   LOGGING
+--------------------------------------------------------- */
+
+{
+    module: "BLUE TEAM",
+    threat: "info",
+
+    keywords: [
+        "logging",
+        "logs",
+        "monitoring",
+        "observability"
+    ],
+
+    title:
+        "Security Logging & Monitoring",
+
+    answer: `
+        <p>
+        Security logging creates an evidence trail that
+        can support detection, troubleshooting and incident
+        investigation.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">TELEMETRY</span>
+                <span class="vocab-value">
+                    Security-relevant observations
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">IOC</span>
+                <span class="vocab-value">
+                    Indicator of Compromise
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">TIMELINE</span>
+                <span class="vocab-value">
+                    Ordered sequence of relevant events
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>LOGGING RULE //</b>
+            Collect useful telemetry, synchronize system clocks,
+            protect logs and retain enough history for investigation.
+        </div>
+    `
+},
+
+/* ---------------------------------------------------------
+   SECURITY PRINCIPLES
+--------------------------------------------------------- */
+
+{
+    module: "CORE",
+    threat: "info",
+
+    keywords: [
+        "cia triad",
+        "confidentiality",
+        "integrity",
+        "availability"
+    ],
+
+    title:
+        "CIA Triad",
+
+    answer: `
+        <p>
+        The CIA triad is a foundational cybersecurity model
+        describing three core security objectives.
+        </p>
+
+        <div class="vocab">
+
+            <div class="vocab-row">
+                <span class="vocab-key">CONFIDENTIALITY</span>
+                <span class="vocab-value">
+                    Prevent unauthorized disclosure
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">INTEGRITY</span>
+                <span class="vocab-value">
+                    Prevent unauthorized alteration
+                </span>
+            </div>
+
+            <div class="vocab-row">
+                <span class="vocab-key">AVAILABILITY</span>
+                <span class="vocab-value">
+                    Keep systems and information accessible
+                </span>
+            </div>
+
+        </div>
+
+        <div class="tip">
+            <b>FOUNDATION //</b>
+            Most security controls can be connected to one
+            or more of these objectives.
+        </div>
+    `
+}
 
 ];
 
 
 /* =========================================================
-   DANGEROUS REQUEST DETECTION
+   UNSAFE REQUEST DETECTION
 ========================================================= */
 
 const unsafePatterns = [
@@ -1677,7 +3326,10 @@ const unsafePatterns = [
     /destroy.*server/i,
     /delete.*logs/i,
     /evade.*antivirus/i,
-    /disable.*antivirus/i
+    /disable.*antivirus/i,
+    /credential.*stealing/i,
+    /phish.*someone/i,
+    /steal.*cookie/i
 
 ];
 
@@ -1685,135 +3337,398 @@ const unsafePatterns = [
 function isUnsafeRequest(question) {
 
     return unsafePatterns.some(
-        pattern =>
-            pattern.test(question)
+        pattern => pattern.test(question)
     );
 }
 
 
 /* =========================================================
-   FIND ANSWER
+   UNSAFE RESPONSE
 ========================================================= */
 
-function findAnswer(question) {
+function safetyResponse() {
 
-    if (
-        isUnsafeRequest(question)
-    ) {
+    return {
 
-        return `
+        module: "SAFETY",
 
-        🛡️ <strong>Let's keep it ethical.</strong>
+        threat: "high",
 
-        <br><br>
+        title:
+            "Authorized Security Only",
 
-        I can explain the cybersecurity concept,
-        help you secure your own system, or show
-        you how to practice the technique in an
-        authorized CTF or isolated lab.
+        answer: `
+            <p>
+            I can help explain the underlying security concept,
+            build defensive controls, analyze vulnerabilities
+            conceptually, or create exercises for an authorized
+            lab or CTF.
+            </p>
 
-        <br><br>
+            <div class="vocab">
 
-        For example, you can ask:
+                <div class="vocab-row">
+                    <span class="vocab-key">SAFE PATH</span>
+                    <span class="vocab-value">
+                        Learn the concept and defensive mechanism
+                    </span>
+                </div>
 
-        <br><br>
+                <div class="vocab-row">
+                    <span class="vocab-key">LAB</span>
+                    <span class="vocab-value">
+                        Use systems intentionally designed for testing
+                    </span>
+                </div>
 
-        • "How do I secure an account?"<br>
-        • "How does SQL injection work?"<br>
-        • "How can I detect malware?"<br>
-        • "How do I build a safe security lab?"<br>
-        • "How can I defend against phishing?"
+                <div class="vocab-row">
+                    <span class="vocab-key">DEFENSE</span>
+                    <span class="vocab-value">
+                        Detection, hardening and remediation
+                    </span>
+                </div>
 
-        `;
+            </div>
+
+            <div class="tip">
+                <b>CYBER RULE //</b>
+                Only test systems and accounts when you have
+                explicit authorization to do so.
+            </div>
+        `
+    };
+}
+
+
+/* =========================================================
+   MATCHING ENGINE
+========================================================= */
+
+function findBestAnswer(question) {
+
+    if (isUnsafeRequest(question)) {
+        return safetyResponse();
     }
 
-
     const q =
-        question.toLowerCase();
+        question
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, " ");
 
-    let bestMatch =
-        null;
+    let best = null;
+    let bestScore = 0;
 
-    let bestScore =
-        0;
+    for (const item of knowledge) {
 
+        let score = 0;
 
-    for (
-        const item of knowledge
-    ) {
+        for (const keyword of item.keywords) {
 
-        let score =
-            0;
+            const key =
+                keyword.toLowerCase();
 
-        for (
-            const keyword of item.keywords
-        ) {
+            if (q.includes(key)) {
 
-            if (
-                q.includes(keyword)
-            ) {
-
-                score++;
+                score +=
+                    key.length > 5
+                        ? 3
+                        : 2;
             }
         }
 
+        /*
+         * Module-related bonus
+         */
+
         if (
-            score > bestScore
+            q.includes(
+                item.module.toLowerCase()
+            )
         ) {
+            score += 2;
+        }
 
-            bestScore =
-                score;
+        if (score > bestScore) {
 
-            bestMatch =
-                item;
+            bestScore = score;
+            best = item;
+
         }
     }
 
+    return best;
+}
 
-    if (bestMatch) {
 
-        return bestMatch.answer;
-    }
+/* =========================================================
+   GENERIC RESPONSE
+========================================================= */
 
+function genericResponse(question) {
+
+    return {
+
+        module: "CORE",
+
+        threat: "info",
+
+        title:
+            "Knowledge Query",
+
+        answer: `
+            <p>
+            I don't have a dedicated knowledge module for
+            <strong>${escapeHTML(question)}</strong> yet.
+            </p>
+
+            <p>
+            Try querying the intelligence core with terminology
+            from one of these domains:
+            </p>
+
+            <div class="vocab">
+
+                <div class="vocab-row">
+                    <span class="vocab-key">RECON</span>
+                    <span class="vocab-value">
+                        OSINT, enumeration, attack surface
+                    </span>
+                </div>
+
+                <div class="vocab-row">
+                    <span class="vocab-key">WEBSEC</span>
+                    <span class="vocab-value">
+                        XSS, SQLi, CSRF, SSRF, BOLA
+                    </span>
+                </div>
+
+                <div class="vocab-row">
+                    <span class="vocab-key">BLUE TEAM</span>
+                    <span class="vocab-value">
+                        SIEM, EDR, IOC, monitoring
+                    </span>
+                </div>
+
+                <div class="vocab-row">
+                    <span class="vocab-key">DFIR</span>
+                    <span class="vocab-value">
+                        Incident response, forensics, triage
+                    </span>
+                </div>
+
+                <div class="vocab-row">
+                    <span class="vocab-key">CRYPTO</span>
+                    <span class="vocab-value">
+                        AES, RSA, hashing, PKI
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="tip">
+                <b>QUERY TIP //</b>
+                Try asking "What is SIEM?", "Explain SSRF",
+                "What is zero trust?", or "Explain CVE".
+            </div>
+        `
+    };
+}
+
+
+/* =========================================================
+   BUILD BOT MESSAGE
+========================================================= */
+
+function buildBotMessage(result) {
 
     return `
+        <div class="message bot">
 
-        🤖 <strong>CYBERAI</strong>
+            <div class="avatar">
+                🛡️
+            </div>
 
-        <br><br>
+            <div class="bubble">
 
-        I don't have a specific answer for that
-        in my built-in knowledge base yet.
+                <div class="response-header">
 
-        <br><br>
+                    <span class="module-tag">
+                        ${result.module} // ANALYSIS
+                    </span>
 
-        Try asking about:
+                    <span class="threat ${result.threat}">
+                        ${result.threat.toUpperCase()}
+                    </span>
 
-        <br><br>
+                </div>
 
-        🛡️ Ethical hacking<br>
-        🔐 Password security<br>
-        🕸️ Web security<br>
-        🌐 Network security<br>
-        🐛 Malware analysis<br>
-        🧪 CTFs<br>
-        🔒 Cryptography<br>
-        🐧 Linux security<br>
-        🚨 Incident response
+                <div class="cyber-title">
+                    ${result.title}
+                </div>
 
-        <br><br>
+                ${result.answer}
 
-        <span style="color:#39ff88;">
-        Tip: keep experiments inside systems
-        you own or have permission to test.
-        </span>
+            </div>
 
+        </div>
     `;
 }
 
 
 /* =========================================================
-   SEND MESSAGE
+   ADD USER MESSAGE
+========================================================= */
+
+function addUserMessage(text) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message user";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <div class="bubble">
+
+            <div class="user-label">
+                OPERATOR // QUERY
+            </div>
+
+            ${escapeHTML(text)}
+
+        </div>
+    `;
+
+    chat.appendChild(message);
+
+    scrollChat();
+}
+
+
+/* =========================================================
+   ADD BOT MESSAGE
+========================================================= */
+
+function addBotMessage(result) {
+
+    chat.insertAdjacentHTML(
+        "beforeend",
+        buildBotMessage(result)
+    );
+
+    scrollChat();
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+function showTyping() {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message bot";
+
+    message.id =
+        "typingMessage";
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            🛡️
+        </div>
+
+        <div class="bubble">
+
+            <div class="typing-row">
+
+                <div class="typing">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                ANALYZING QUERY...
+
+            </div>
+
+        </div>
+    `;
+
+    chat.appendChild(message);
+
+    scrollChat();
+}
+
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+    if (typing) {
+        typing.remove();
+    }
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollChat() {
+
+    chat.scrollTop =
+        chat.scrollHeight;
+}
+
+
+/* =========================================================
+   SAVE CHAT
+========================================================= */
+
+function saveChat() {
+
+    localStorage.setItem(
+        "cyberai_chat_v2",
+        chat.innerHTML
+    );
+}
+
+
+/* =========================================================
+   LOAD CHAT
+========================================================= */
+
+function loadChat() {
+
+    const saved =
+        localStorage.getItem(
+            "cyberai_chat_v2"
+        );
+
+    if (saved) {
+
+        chat.innerHTML =
+            saved;
+
+        scrollChat();
+    }
+}
+
+
+/* =========================================================
+   SEND
 ========================================================= */
 
 async function sendMessage() {
@@ -1825,45 +3740,47 @@ async function sendMessage() {
         return;
     }
 
-
-    addMessage(
-        escapeHTML(question),
-        "user"
-    );
-
+    addUserMessage(question);
 
     input.value = "";
 
-
     showTyping();
 
+    /*
+     * Simulated intelligence processing.
+     */
+
+    const delay =
+        450 +
+        Math.random() * 850;
 
     await new Promise(
         resolve =>
             setTimeout(
                 resolve,
-                600 +
-                Math.random() * 900
+                delay
             )
     );
 
-
     removeTyping();
 
+    let result =
+        findBestAnswer(question);
 
-    const answer =
-        findAnswer(question);
+    if (!result) {
 
+        result =
+            genericResponse(question);
+    }
 
-    addMessage(
-        answer,
-        "bot"
-    );
+    addBotMessage(result);
+
+    saveChat();
 }
 
 
 /* =========================================================
-   BUTTON
+   SEND BUTTON
 ========================================================= */
 
 sendBtn.addEventListener(
@@ -1873,7 +3790,7 @@ sendBtn.addEventListener(
 
 
 /* =========================================================
-   ENTER KEY
+   ENTER
 ========================================================= */
 
 input.addEventListener(
@@ -1881,8 +3798,11 @@ input.addEventListener(
     event => {
 
         if (
-            event.key === "Enter"
+            event.key === "Enter" &&
+            !event.shiftKey
         ) {
+
+            event.preventDefault();
 
             sendMessage();
         }
@@ -1905,7 +3825,171 @@ function askSuggestion(question) {
 
 
 /* =========================================================
-   LOGO RANDOM FLASH
+   CLEAR CHAT
+========================================================= */
+
+function clearChat() {
+
+    const confirmed =
+        confirm(
+            "Clear the local CyberAI session?"
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(
+        "cyberai_chat_v2"
+    );
+
+    location.reload();
+}
+
+
+/* =========================================================
+   EXPORT CHAT
+========================================================= */
+
+function exportChat() {
+
+    const text =
+        chat.innerText;
+
+    const blob =
+        new Blob(
+            [text],
+            {
+                type: "text/plain"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "cyberai-session.txt";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+
+/* =========================================================
+   RANDOM CYBER TIPS
+========================================================= */
+
+const tips = [
+
+    "Reduce attack surface before attempting complicated defenses.",
+
+    "Authentication answers 'who are you?'; authorization answers 'what are you allowed to do?'",
+
+    "Treat credentials as high-value security assets.",
+
+    "Logging without useful detection logic can create mountains of noise.",
+
+    "Least privilege limits the blast radius of compromised accounts.",
+
+    "A vulnerability is not automatically an incident; context and exploitation matter.",
+
+    "Security is a process, not a single product.",
+
+    "Know your assets before attempting to protect them.",
+
+    "Segmentation can reduce unnecessary lateral movement.",
+
+    "Backups are part of resilience, but they should themselves be protected.",
+
+    "Threat intelligence becomes useful when it can inform a defensive decision.",
+
+    "Patch management works best when organizations understand their asset inventory.",
+
+    "MFA can significantly reduce the impact of many stolen-password scenarios.",
+
+    "Good security engineering considers failure modes before deployment.",
+
+    "Practice offensive concepts inside authorized labs and CTF environments."
+
+];
+
+
+function showRandomTip() {
+
+    const tip =
+        tips[
+            Math.floor(
+                Math.random() * tips.length
+            )
+        ];
+
+    addBotMessage({
+
+        module: "CYBER TIP",
+
+        threat: "info",
+
+        title:
+            "Security Intelligence",
+
+        answer: `
+
+            <p>
+                ${escapeHTML(tip)}
+            </p>
+
+            <div class="tip">
+                <b>COMMANDMENT //</b>
+                Build systems so that one mistake does not
+                automatically become a complete compromise.
+            </div>
+
+        `
+    });
+
+    saveChat();
+}
+
+
+/* =========================================================
+   MODULE HIGHLIGHT
+========================================================= */
+
+function highlightModule(moduleName) {
+
+    document
+        .querySelectorAll(".module")
+        .forEach(module => {
+
+            module.classList.remove("active");
+
+            if (
+                module.textContent
+                    .includes(moduleName)
+            ) {
+                module.classList.add("active");
+            }
+
+        });
+}
+
+
+/* =========================================================
+   WATCH CHAT FOR MODULES
+========================================================= */
+
+const originalAddBotMessage =
+    addBotMessage;
+
+
+/* =========================================================
+   LOGO FLASH
 ========================================================= */
 
 setInterval(() => {
@@ -1921,26 +4005,68 @@ setInterval(() => {
         logo.style.transform =
             "scale(1)";
 
-    }, 180);
+    }, 170);
 
-}, 3500);
+}, 4000);
 
 
 /* =========================================================
-   FOCUS
+   LOAD
 ========================================================= */
 
 window.addEventListener(
     "load",
     () => {
 
+        loadChat();
+
         setTimeout(
             () => input.focus(),
-            500
+            400
         );
 
     }
 );
+
+
+/* =========================================================
+   RANDOM SYSTEM EVENTS
+========================================================= */
+
+const systemEvents = [
+
+    "THREAT ENGINE READY",
+    "TELEMETRY CHANNEL STABLE",
+    "KNOWLEDGE GRAPH SYNCHRONIZED",
+    "DEFENSIVE MODULES ONLINE",
+    "ANALYSIS CORE READY",
+    "SECURITY RULESET LOADED"
+
+];
+
+setInterval(() => {
+
+    const modules =
+        document.querySelectorAll(
+            ".module"
+        );
+
+    const random =
+        modules[
+            Math.floor(
+                Math.random() *
+                modules.length
+            )
+        ];
+
+    modules.forEach(
+        m =>
+            m.classList.remove("active")
+    );
+
+    random.classList.add("active");
+
+}, 5000);
 
 </script>
 
