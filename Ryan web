@@ -1,0 +1,1678 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Ryan Ronald Movies - Discover movies, trailers and trending films.">
+<title>RYAN RONALD | Movies</title>
+
+<style>
+/* =========================================================
+   RYAN RONALD MOVIE WEBSITE
+   HTML + CSS + JAVASCRIPT IN ONE FILE
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #030706;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ================= BACKGROUND ================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -5;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(0,255,100,.14), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0,255,180,.10), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(0,255,100,.08), transparent 30%),
+        #030706;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: rgba(0,255,100,.08);
+    filter: blur(100px);
+    top: 10%;
+    left: -150px;
+    animation: floatGlow 8s infinite alternate ease-in-out;
+    z-index: -4;
+}
+
+@keyframes floatGlow {
+    from {
+        transform: translate(0,0);
+    }
+    to {
+        transform: translate(100vw,250px);
+    }
+}
+
+/* animated grid */
+
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    opacity: .16;
+    background-image:
+        linear-gradient(rgba(0,255,100,.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,100,.12) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 15s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 50px 50px;
+    }
+}
+
+/* ================= NAVBAR ================= */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 15px 6%;
+    background: rgba(0,0,0,.72);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0,255,100,.18);
+}
+
+.navbar {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* LOGO */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: #00ff66;
+    color: #001b0a;
+    box-shadow:
+        0 0 10px #00ff66,
+        0 0 25px #00ff66,
+        0 0 50px rgba(0,255,102,.6);
+    animation: logoBlink 1.4s infinite alternate;
+}
+
+@keyframes logoBlink {
+    0% {
+        opacity: .65;
+        transform: scale(1);
+        box-shadow: 0 0 8px #00ff66;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1.07);
+        box-shadow:
+            0 0 15px #00ff66,
+            0 0 35px #00ff66,
+            0 0 70px rgba(0,255,102,.7);
+    }
+}
+
+.logo span {
+    color: #00ff66;
+    text-shadow: 0 0 15px rgba(0,255,100,.7);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a {
+    color: #ddd;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: .3s;
+}
+
+nav a:hover {
+    color: #00ff66;
+    text-shadow: 0 0 10px #00ff66;
+}
+
+/* search */
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(0,255,100,.25);
+    border-radius: 30px;
+    padding: 7px 13px;
+}
+
+.search-box input {
+    width: 150px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 13px;
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    color: #00ff66;
+    cursor: pointer;
+    font-size: 17px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 720px;
+    padding: 160px 7% 90px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 750px;
+}
+
+.badge {
+    display: inline-block;
+    color: #00ff66;
+    border: 1px solid rgba(0,255,100,.35);
+    background: rgba(0,255,100,.06);
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(50px, 8vw, 100px);
+    line-height: .9;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: #00ff66;
+    text-shadow:
+        0 0 10px #00ff66,
+        0 0 30px rgba(0,255,100,.6);
+}
+
+.hero p {
+    max-width: 600px;
+    color: #aaa;
+    font-size: 17px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 23px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 800;
+    border: 1px solid #00ff66;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #00ff66;
+    color: #001b0a;
+    box-shadow: 0 0 20px rgba(0,255,100,.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 35px rgba(0,255,100,.7);
+}
+
+.btn-secondary {
+    color: white;
+    background: rgba(255,255,255,.05);
+}
+
+.btn-secondary:hover {
+    background: rgba(0,255,100,.1);
+    color: #00ff66;
+}
+
+/* hero decoration */
+
+.hero-orb {
+    position: absolute;
+    right: 8%;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,100,.25);
+    box-shadow:
+        0 0 60px rgba(0,255,100,.12),
+        inset 0 0 50px rgba(0,255,100,.08);
+    animation: orb 7s infinite alternate ease-in-out;
+}
+
+.hero-orb::before,
+.hero-orb::after {
+    content: "";
+    position: absolute;
+    inset: 35px;
+    border: 1px solid rgba(0,255,100,.18);
+    border-radius: 50%;
+}
+
+.hero-orb::after {
+    inset: 90px;
+}
+
+@keyframes orb {
+    from {
+        transform: translateY(-25px) rotate(0deg);
+    }
+
+    to {
+        transform: translateY(25px) rotate(25deg);
+    }
+}
+
+/* ================= SECTIONS ================= */
+
+section {
+    padding: 80px 6%;
+}
+
+.section-title {
+    max-width: 1400px;
+    margin: auto auto 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+}
+
+.section-title h2 span {
+    color: #00ff66;
+}
+
+.section-title p {
+    color: #777;
+}
+
+/* ================= FILTER ================= */
+
+.filters {
+    max-width: 1400px;
+    margin: 0 auto 35px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 9px 17px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 30px;
+    background: rgba(255,255,255,.04);
+    color: #aaa;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: #00ff66;
+    color: #001b0a;
+    border-color: #00ff66;
+}
+
+/* ================= MOVIES ================= */
+
+.movie-grid {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 22px;
+}
+
+.movie-card {
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    transition: .35s;
+}
+
+.movie-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0,255,100,.5);
+    box-shadow: 0 15px 40px rgba(0,0,0,.5);
+}
+
+.poster {
+    height: 285px;
+    position: relative;
+    overflow: hidden;
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: .5s;
+}
+
+.movie-card:hover .poster img {
+    transform: scale(1.08);
+}
+
+.poster::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(transparent 45%, rgba(0,0,0,.9));
+}
+
+.movie-info {
+    padding: 15px;
+}
+
+.movie-info h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.movie-meta {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 13px;
+}
+
+.movie-meta span {
+    color: #00ff66;
+}
+
+.watch-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(0,255,100,.1);
+    color: #00ff66;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.watch-btn:hover {
+    background: #00ff66;
+    color: #001b0a;
+}
+
+/* ================= FEATURED ================= */
+
+.featured {
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 25px;
+    background:
+        linear-gradient(110deg, rgba(0,255,100,.12), rgba(0,0,0,.7)),
+        rgba(255,255,255,.03);
+    border: 1px solid rgba(0,255,100,.2);
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.featured-text h2 {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.featured-text h2 span {
+    color: #00ff66;
+}
+
+.featured-text p {
+    color: #aaa;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.featured-image {
+    height: 330px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ================= TRAILERS ================= */
+
+.trailer-grid {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+}
+
+.trailer-card {
+    background: rgba(255,255,255,.04);
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.trailer-thumb {
+    height: 190px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.trailer-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .5s;
+}
+
+.trailer-card:hover img {
+    transform: scale(1.08);
+}
+
+.play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #00ff66;
+    color: #001b0a;
+    font-size: 22px;
+    box-shadow: 0 0 30px rgba(0,255,100,.7);
+}
+
+.trailer-info {
+    padding: 15px;
+}
+
+.trailer-info h3 {
+    margin-bottom: 6px;
+}
+
+.trailer-info p {
+    color: #777;
+    font-size: 13px;
+}
+
+/* ================= NO RESULTS ================= */
+
+.no-results {
+    text-align: center;
+    color: #777;
+    padding: 40px;
+    display: none;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    backdrop-filter: blur(10px);
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: min(900px, 100%);
+    background: #07100b;
+    border: 1px solid rgba(0,255,100,.35);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(0,255,100,.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.modal-header h3 {
+    color: #00ff66;
+}
+
+.close {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.15);
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.close:hover {
+    background: #00ff66;
+    color: #001b0a;
+}
+
+.video-container {
+    aspect-ratio: 16 / 9;
+    background: black;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    margin-top: 60px;
+    padding: 50px 6%;
+    text-align: center;
+    border-top: 1px solid rgba(0,255,100,.12);
+    background: rgba(0,0,0,.5);
+}
+
+.footer-logo {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 12px;
+}
+
+.footer-logo span {
+    color: #00ff66;
+}
+
+footer p {
+    color: #777;
+    margin: 7px;
+}
+
+.creator {
+    color: #00ff66 !important;
+    font-weight: bold;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 850px) {
+
+    header {
+        padding: 12px 4%;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .hero {
+        min-height: 650px;
+        padding: 140px 6% 80px;
+    }
+
+    .hero-orb {
+        width: 220px;
+        height: 220px;
+        right: -80px;
+        opacity: .5;
+    }
+
+    .featured {
+        grid-template-columns: 1fr;
+    }
+
+    .featured-text h2 {
+        font-size: 35px;
+    }
+
+    .search-box input {
+        width: 100px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .logo-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .poster {
+        height: 230px;
+    }
+
+    .movie-info {
+        padding: 10px;
+    }
+
+    .movie-info h3 {
+        font-size: 14px;
+    }
+
+    .section-title h2 {
+        font-size: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+    <div class="navbar">
+
+        <a href="#" class="logo">
+            <div class="logo-icon">🎬</div>
+            <div>RYAN <span>RONALD</span></div>
+        </a>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#movies">Movies</a>
+            <a href="#trailers">Trailers</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search movies..."
+            >
+            <button onclick="searchMovies()">🔎</button>
+        </div>
+
+    </div>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<main id="home">
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">WELCOME TO RYAN RONALD CINEMA</div>
+
+        <h1>
+            WATCH.<br>
+            <span>DISCOVER.</span><br>
+            ENJOY.
+        </h1>
+
+        <p>
+            Explore amazing movies, discover new adventures,
+            and watch the latest trailers all in one cinematic
+            experience powered by Ryan Ronald.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#movies" class="btn btn-primary">
+                🎬 Explore Movies
+            </a>
+
+            <a href="#trailers" class="btn btn-secondary">
+                ▶ Watch Trailers
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-orb"></div>
+
+</section>
+
+
+<!-- ================= MOVIES ================= -->
+
+<section id="movies">
+
+    <div class="section-title">
+
+        <div>
+            <h2>Popular <span>Movies</span></h2>
+            <p>Find something exciting to watch.</p>
+        </div>
+
+    </div>
+
+    <div class="filters">
+
+        <button class="filter-btn active" data-category="all">
+            All
+        </button>
+
+        <button class="filter-btn" data-category="action">
+            Action
+        </button>
+
+        <button class="filter-btn" data-category="sci-fi">
+            Sci-Fi
+        </button>
+
+        <button class="filter-btn" data-category="adventure">
+            Adventure
+        </button>
+
+        <button class="filter-btn" data-category="comedy">
+            Comedy
+        </button>
+
+        <button class="filter-btn" data-category="drama">
+            Drama
+        </button>
+
+    </div>
+
+
+    <div class="movie-grid" id="movieGrid">
+
+        <!-- MOVIE 1 -->
+
+        <article class="movie-card"
+            data-title="Avengers Endgame"
+            data-category="action">
+
+            <div class="poster">
+                <img
+                    src="https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
+                    alt="Avengers Endgame">
+            </div>
+
+            <div class="movie-info">
+                <h3>Avengers: Endgame</h3>
+
+                <div class="movie-meta">
+                    2019 • <span>Action</span> • ⭐ 8.4
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/TcMBFSGVi1c','Avengers: Endgame')">
+                    ▶ Watch Trailer
+                </button>
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 2 -->
+
+        <article class="movie-card"
+            data-title="Interstellar"
+            data-category="sci-fi">
+
+            <div class="poster">
+                <img
+                    src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                    alt="Interstellar">
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Interstellar</h3>
+
+                <div class="movie-meta">
+                    2014 • <span>Sci-Fi</span> • ⭐ 8.7
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/zSWdZVtXT7E','Interstellar')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 3 -->
+
+        <article class="movie-card"
+            data-title="The Batman"
+            data-category="action">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                    alt="The Batman">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>The Batman</h3>
+
+                <div class="movie-meta">
+                    2022 • <span>Action</span> • ⭐ 7.8
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/mqqft2x_Aa4','The Batman')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 4 -->
+
+        <article class="movie-card"
+            data-title="Avatar"
+            data-category="adventure">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/kyeqWdyUXW608qlYkRqosgbbJyK.jpg"
+                    alt="Avatar">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Avatar</h3>
+
+                <div class="movie-meta">
+                    2009 • <span>Adventure</span> • ⭐ 7.9
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/5PSNL1qE6VY','Avatar')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 5 -->
+
+        <article class="movie-card"
+            data-title="Spider Man No Way Home"
+            data-category="action">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                    alt="Spider-Man No Way Home">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Spider-Man: No Way Home</h3>
+
+                <div class="movie-meta">
+                    2021 • <span>Action</span> • ⭐ 8.2
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/JfVOs4VSpmA','Spider-Man: No Way Home')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 6 -->
+
+        <article class="movie-card"
+            data-title="Free Guy"
+            data-category="comedy">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/xmbU4JTUm8rsdtn7Y3Fcm30GpeT.jpg"
+                    alt="Free Guy">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Free Guy</h3>
+
+                <div class="movie-meta">
+                    2021 • <span>Comedy</span> • ⭐ 7.1
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/X2m-08cOAbc','Free Guy')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 7 -->
+
+        <article class="movie-card"
+            data-title="Black Panther"
+            data-category="action">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"
+                    alt="Black Panther">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Black Panther</h3>
+
+                <div class="movie-meta">
+                    2018 • <span>Action</span> • ⭐ 7.3
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/xjDjIWPwcPU','Black Panther')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 8 -->
+
+        <article class="movie-card"
+            data-title="Guardians of the Galaxy"
+            data-category="adventure">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg"
+                    alt="Guardians of the Galaxy">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Guardians of the Galaxy</h3>
+
+                <div class="movie-meta">
+                    2014 • <span>Adventure</span> • ⭐ 8.0
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/d96cjJhvlMA','Guardians of the Galaxy')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 9 -->
+
+        <article class="movie-card"
+            data-title="Joker"
+            data-category="drama">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
+                    alt="Joker">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Joker</h3>
+
+                <div class="movie-meta">
+                    2019 • <span>Drama</span> • ⭐ 8.1
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/zAGVQLHvwOY','Joker')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+
+        <!-- MOVIE 10 -->
+
+        <article class="movie-card"
+            data-title="Dune"
+            data-category="sci-fi">
+
+            <div class="poster">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
+                    alt="Dune">
+
+            </div>
+
+            <div class="movie-info">
+
+                <h3>Dune</h3>
+
+                <div class="movie-meta">
+                    2021 • <span>Sci-Fi</span> • ⭐ 8.0
+                </div>
+
+                <button
+                    class="watch-btn"
+                    onclick="openTrailer('https://www.youtube.com/embed/n9xhJrPXop4','Dune')">
+                    ▶ Watch Trailer
+                </button>
+
+            </div>
+
+        </article>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+        😕 No movies found.
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURED ================= -->
+
+<section>
+
+    <div class="featured">
+
+        <div class="featured-text">
+
+            <div class="badge">FEATURED MOVIE</div>
+
+            <h2>
+                Enter The <span>Movie Universe</span>
+            </h2>
+
+            <p>
+                Discover incredible stories, legendary heroes,
+                unforgettable characters and cinematic worlds.
+                Ryan Ronald brings your movie experience together
+                in one place.
+            </p>
+
+            <button
+                class="btn btn-primary"
+                onclick="openTrailer('https://www.youtube.com/embed/TcMBFSGVi1c','Featured Movie')">
+                ▶ Play Trailer
+            </button>
+
+        </div>
+
+        <div class="featured-image">
+
+            <img
+                src="https://image.tmdb.org/t/p/original/7RyHsO4yDXtBv1zUU2cW2WnZ2n.jpg"
+                alt="Featured Movie">
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TRAILERS ================= -->
+
+<section id="trailers">
+
+    <div class="section-title">
+
+        <div>
+            <h2>Latest <span>Trailers</span></h2>
+            <p>Watch movie trailers instantly.</p>
+        </div>
+
+    </div>
+
+
+    <div class="trailer-grid">
+
+        <article class="trailer-card">
+
+            <div
+                class="trailer-thumb"
+                onclick="openTrailer('https://www.youtube.com/embed/TcMBFSGVi1c','Avengers: Endgame')">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w780/or06FN3Dka5tukK1e9sl16pB3iy.jpg"
+                    alt="Avengers">
+
+                <div class="play">▶</div>
+
+            </div>
+
+            <div class="trailer-info">
+                <h3>Avengers: Endgame</h3>
+                <p>The epic Marvel finale.</p>
+            </div>
+
+        </article>
+
+
+        <article class="trailer-card">
+
+            <div
+                class="trailer-thumb"
+                onclick="openTrailer('https://www.youtube.com/embed/zSWdZVtXT7E','Interstellar')">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                    alt="Interstellar">
+
+                <div class="play">▶</div>
+
+            </div>
+
+            <div class="trailer-info">
+                <h3>Interstellar</h3>
+                <p>A journey beyond the stars.</p>
+            </div>
+
+        </article>
+
+
+        <article class="trailer-card">
+
+            <div
+                class="trailer-thumb"
+                onclick="openTrailer('https://www.youtube.com/embed/mqqft2x_Aa4','The Batman')">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                    alt="Batman">
+
+                <div class="play">▶</div>
+
+            </div>
+
+            <div class="trailer-info">
+                <h3>The Batman</h3>
+                <p>Become the night.</p>
+            </div>
+
+        </article>
+
+
+        <article class="trailer-card">
+
+            <div
+                class="trailer-thumb"
+                onclick="openTrailer('https://www.youtube.com/embed/JfVOs4VSpmA','Spider-Man: No Way Home')">
+
+                <img
+                    src="https://image.tmdb.org/t/p/w780/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                    alt="Spider-Man">
+
+                <div class="play">▶</div>
+
+            </div>
+
+            <div class="trailer-info">
+                <h3>Spider-Man: No Way Home</h3>
+                <p>The multiverse is coming.</p>
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="section-title">
+
+        <div>
+
+            <h2>About <span>Ryan Ronald</span></h2>
+
+            <p>
+                A modern movie discovery experience.
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="featured">
+
+        <div class="featured-text">
+
+            <h2>
+                RYAN <span>RONALD</span>
+            </h2>
+
+            <p>
+                Welcome to Ryan Ronald Movies — a cinematic
+                website designed for movie lovers. Explore
+                popular films, browse different genres and
+                watch trailers from your favorite movies.
+            </p>
+
+            <a href="#movies" class="btn btn-primary">
+                🎬 Browse Movies
+            </a>
+
+        </div>
+
+        <div class="featured-image">
+
+            <img
+                src="https://image.tmdb.org/t/p/original/8YFL5QQVPy3Mrs2SvaOfg2ztu.jpg"
+                alt="Cinema">
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-logo">
+        RYAN <span>RONALD</span>
+    </div>
+
+    <p>
+        🎬 Movie discovery made cinematic.
+    </p>
+
+    <p class="creator">
+        © 2026 Ryan Ronald • All Rights Reserved
+    </p>
+
+    <p>
+        Designed & Created by <strong>Ryan Ronald</strong>
+    </p>
+
+</footer>
+
+
+<!-- ================= TRAILER MODAL ================= -->
+
+<div class="modal" id="trailerModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h3 id="modalTitle">
+                Movie Trailer
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeTrailer()">
+                ×
+            </button>
+
+        </div>
+
+        <div class="video-container">
+
+            <iframe
+                id="trailerFrame"
+                src=""
+                title="Movie Trailer"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   RYAN RONALD MOVIE WEBSITE JAVASCRIPT
+   ========================================================= */
+
+
+/* ================= TRAILER MODAL ================= */
+
+const modal = document.getElementById("trailerModal");
+const trailerFrame = document.getElementById("trailerFrame");
+const modalTitle = document.getElementById("modalTitle");
+
+function openTrailer(url, title) {
+
+    modalTitle.textContent = title;
+
+    trailerFrame.src = url + "?autoplay=1";
+
+    modal.classList.add("show");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeTrailer() {
+
+    modal.classList.remove("show");
+
+    trailerFrame.src = "";
+
+    document.body.style.overflow = "";
+}
+
+
+/* close modal by clicking outside */
+
+modal.addEventListener("click", function(event) {
+
+    if (event.target === modal) {
+        closeTrailer();
+    }
+
+});
+
+
+/* close with ESC */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        closeTrailer();
+    }
+
+});
+
+
+/* ================= CATEGORY FILTER ================= */
+
+const filterButtons =
+    document.querySelectorAll(".filter-btn");
+
+const movieCards =
+    document.querySelectorAll(".movie-card");
+
+filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        filterButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        const category =
+            button.dataset.category;
+
+        movieCards.forEach(card => {
+
+            const cardCategory =
+                card.dataset.category;
+
+            if (
+                category === "all" ||
+                cardCategory === category
+            ) {
+
+                card.style.display = "";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+        document.getElementById("noResults").style.display = "none";
+
+    });
+
+});
+
+
+/* ================= SEARCH ================= */
+
+const searchInput =
+    document.getElementById("searchInput");
+
+function searchMovies() {
+
+    const query =
+        searchInput.value.toLowerCase().trim();
+
+    let found = 0;
+
+    movieCards.forEach(card => {
+
+        const title =
+            card.dataset.title.toLowerCase();
+
+        if (title.includes(query)) {
+
+            card.style.display = "";
+            found++;
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+    document.getElementById("noResults").style.display =
+        found === 0 ? "block" : "none";
+
+}
+
+
+searchInput.addEventListener("input", searchMovies);
+
+
+/* ================= ENTER SEARCH ================= */
+
+searchInput.addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+        searchMovies();
+    }
+
+});
+
+
+/* ================= NAVBAR SCROLL ================= */
+
+window.addEventListener("scroll", function() {
+
+    const header =
+        document.querySelector("header");
+
+    if (window.scrollY > 50) {
+
+        header.style.background =
+            "rgba(0,0,0,.9)";
+
+    } else {
+
+        header.style.background =
+            "rgba(0,0,0,.72)";
+
+    }
+
+});
+
+
+/* ================= RANDOM GLOW EFFECT ================= */
+
+setInterval(() => {
+
+    const logo =
+        document.querySelector(".logo-icon");
+
+    logo.style.transform =
+        `scale(${1 + Math.random() * .08})`;
+
+}, 1500);
+
+</script>
+
+</body>
+</html>
+```
+
+This version changes the branding throughout the site to **RYAN RONALD**, including the glowing logo, hero section, About section, page title, and footer.
